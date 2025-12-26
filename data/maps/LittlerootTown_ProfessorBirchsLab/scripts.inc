@@ -137,6 +137,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_AgreeToSeeRival::
 LittlerootTown_ProfessorBirchsLab_EventScript_GivePortaPc::
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_GetPortaPc, MSGBOX_DEFAULT
 	giveitem ITEM_PORTA_PC
+	giveitem ITEM_MEDICINE
 	releaseall
 	end
 
@@ -1002,5 +1003,7 @@ LittlerootTown_ProfessorBirchsLab_Text_GetPortaPc:
 	.string "By the way, have this!\p"
 	.string "This here is a portable PC.\n"
 	.string "All these nuzlockers are raving\p"
-	.string "about it.$"
+	.string "about it.\n"
+	.string "Take this medicine and magical\p"
+	.string "candy too.$"
 
