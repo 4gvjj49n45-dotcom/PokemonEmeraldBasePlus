@@ -1551,7 +1551,7 @@ static const u8 sOldSeaMapDesc[] = _(
     "to a certain island.");
 
 // Custom items
-static const u8 sPortaPcDesc[] = (
+static const u8 sPortaPcDesc[] = _(
     "A portable PC, \n"
     "incredibly useful\n"
     "for nuzlockes.");
