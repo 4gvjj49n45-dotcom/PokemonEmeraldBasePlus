@@ -1001,5 +1001,6 @@ LittlerootTown_ProfessorBirchsLab_Text_ScottAboardSSTidalCall:
 LittlerootTown_ProfessorBirchsLab_Text_GetPortaPc:
 	.string "By the way, have this!\p"
 	.string "This here is a portable PC.\n"
-	.string "All these nuzlockers are raving\n"
+	.string "All these nuzlockers are raving\p"
 	.string "about it.$"
+
