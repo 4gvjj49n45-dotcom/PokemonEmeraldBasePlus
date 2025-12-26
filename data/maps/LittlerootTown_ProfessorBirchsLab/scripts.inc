@@ -132,6 +132,11 @@ LittlerootTown_ProfessorBirchsLab_EventScript_AgreeToSeeRival::
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_GetRivalToTeachYou, MSGBOX_DEFAULT
 	clearflag FLAG_HIDE_ROUTE_101_BOY
 	setvar VAR_BIRCH_LAB_STATE, 3
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_GivePortaPc
+
+LittlerootTown_ProfessorBirchsLab_EventScript_GivePortaPc::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_GetPortaPc, MSGBOX_DEFAULT
+	giveitem ITEM_PORTA_PC
 	releaseall
 	end
 
@@ -992,3 +997,9 @@ LittlerootTown_ProfessorBirchsLab_Text_ScottAboardSSTidalCall:
 	.string "we meet. I'll be waiting!\p"
 	.string "… … … … … …\n"
 	.string "… … … … … Click!$"
+
+LittlerootTown_ProfessorBirchsLab_Text_GetPortaPc:
+	.string "By the way, have this!\p"
+	.string "This here is a portable PC.\n"
+	.string "All these nuzlockers are raving\n"
+	.string "about it.$"
