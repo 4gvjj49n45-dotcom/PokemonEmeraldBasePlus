@@ -1156,7 +1156,7 @@ void ItemUseOutOfBattle_PortaPc(u8 taskId)
 static void ItemUseOnFieldCB_PortaPc(u8 taskId)
 {
     LockPlayerFieldControls();
-    ScriptContext_SetupScript(EventScript_PC);
+    ScriptContext_SetupScript(EventScript_PORTAPC);
     DestroyTask(taskId);
 }
 
