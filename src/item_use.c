@@ -70,6 +70,8 @@ static void Task_UseRepel(u8);
 static void Task_CloseCantUseKeyItemMessage(u8);
 static void SetDistanceOfClosestHiddenItem(u8, s16, s16);
 static void CB2_OpenPokeblockFromBag(void);
+static void ItemUseOnFieldCB_PortaPc(u8 taskId);
+
 
 // EWRAM variables
 EWRAM_DATA static TaskFunc sItemUseOnFieldCB = NULL;
@@ -1135,5 +1137,28 @@ void ItemUseOutOfBattle_CannotUse(u8 taskId)
 {
     DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
 }
+
+// Custom items
+void ItemUseOutOfBattle_PortaPc(u8 taskId)
+{
+    // Optional: prevent in link / special states, match other key items if needed
+    if (MenuHelpers_IsLinkActive() == TRUE)
+    {
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+        return;
+    }
+
+    // Use on the field:
+    sItemUseOnFieldCB = ItemUseOnFieldCB_PortaPc;
+    SetUpItemUseOnFieldCallback(taskId);
+}
+
+static void ItemUseOnFieldCB_PortaPc(u8 taskId)
+{
+    LockPlayerFieldControls();
+    ScriptContext_SetupScript(EventScript_PC);
+    DestroyTask(taskId);
+}
+
 
 #undef tUsingRegisteredKeyItem
