@@ -403,6 +403,7 @@ const u32 *const gItemIconTable[ITEMS_COUNT + 1][2] =
     [ITEM_OLD_SEA_MAP] = {gItemIcon_OldSeaMap, gItemIconPalette_OldSeaMap},
     // Custom items
     [ITEM_PORTA_PC] = {gItemIcon_PokeblockCase, gItemIconPalette_PokeblockCase},
+    [ITEM_MEDICINE] = {gItemIcon_SacredAsh, gItemIconPalette_SacredAsh},
     // Return to field arrow
     [ITEMS_COUNT] = {gItemIcon_ReturnToFieldArrow, gItemIconPalette_ReturnToFieldArrow},
 };
