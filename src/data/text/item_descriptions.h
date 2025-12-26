@@ -1559,3 +1559,7 @@ static const u8 sPortaPcDesc[] = _(
 static const u8 sMedicineDesc[] = _(
     "An efficient way to\n"
     "heal your party.");
+
+static const u8 sEndlessCandyDesc[] = _(
+    "Unlimited rare \n"
+    "candies.");

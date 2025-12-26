@@ -4564,4 +4564,18 @@ const struct Item gItems[] =
         .type = ITEM_USE_FIELD,
         .fieldUseFunc = ItemUseOutOfBattle_PocketMedicine,
     },
+
+    [ITEM_ENDLESS_CANDY] =
+    {
+        .name = _("ENDLESS CANDY"),
+        .itemId = ITEM_ENDLESS_CANDY,
+        .price = 0,
+        .description = sEndlessCandyDesc,
+        .importance = 1,
+        .registrability = TRUE,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_EndlessCandy,
+    },
+
 };

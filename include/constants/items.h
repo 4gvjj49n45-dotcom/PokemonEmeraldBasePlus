@@ -420,8 +420,9 @@
 // Custom items
 #define ITEM_PORTA_PC 377
 #define ITEM_MEDICINE 378
+#define ITEM_ENDLESS_CANDY 379
 
-#define ITEMS_COUNT 379
+#define ITEMS_COUNT 380
 
 // A special item id associated with "Cancel"/"Exit" etc. in a list of items or decorations
 // Its icon is defined at ITEMS_COUNT as the "return to field" arrow
