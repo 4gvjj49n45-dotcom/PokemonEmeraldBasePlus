@@ -481,6 +481,9 @@ static bool8 SetUpFieldMove_Fly(void);
 static bool8 SetUpFieldMove_Waterfall(void);
 static bool8 SetUpFieldMove_Dive(void);
 
+// Custom features declerations
+static void Task_AfterItemUse_StayIfMore(u8 taskId);
+
 // static const data
 #include "data/pokemon/tutor_learnsets.h"
 #include "data/party_menu.h"
@@ -1313,7 +1316,7 @@ static void HandleChooseMonSelection(u8 taskId, s8 *slotPtr)
                     sPartyMenuInternal->exitCallback = CB2_SetUpExitToBattleScreen;
 
                 PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
-                gItemUseCB(taskId, Task_ClosePartyMenuAfterText);
+                gItemUseCB(taskId, Task_AfterItemUse_StayIfMore);
             }
             break;
         case PARTY_ACTION_MOVE_TUTOR:
@@ -4466,7 +4469,7 @@ static void Task_DisplayHPRestoredMessage(u8 taskId)
     DisplayPartyMenuMessage(gStringVar4, FALSE);
     ScheduleBgCopyTilemapToVram(2);
     HandleBattleLowHpMusicChange();
-    gTasks[taskId].func = Task_ClosePartyMenuAfterText;
+    gTasks[taskId].func = Task_AfterItemUse_StayIfMore;
 }
 
 static void Task_ClosePartyMenuAfterText(u8 taskId)
@@ -4660,7 +4663,7 @@ static void TryUsePPItem(u8 taskId)
         PlaySE(SE_SELECT);
         DisplayPartyMenuMessage(gText_WontHaveEffect, TRUE);
         ScheduleBgCopyTilemapToVram(2);
-        gTasks[taskId].func = Task_ClosePartyMenuAfterText;
+        gTasks[taskId].func = Task_AfterItemUse_StayIfMore;
     }
     else
     {
@@ -4673,7 +4676,7 @@ static void TryUsePPItem(u8 taskId)
         GetMedicineItemEffectMessage(item);
         DisplayPartyMenuMessage(gStringVar4, TRUE);
         ScheduleBgCopyTilemapToVram(2);
-        gTasks[taskId].func = Task_ClosePartyMenuAfterText;
+        gTasks[taskId].func = Task_AfterItemUse_StayIfMore;
     }
 }
 
@@ -6428,3 +6431,23 @@ void IsLastMonThatKnowsSurf(void)
             gSpecialVar_Result = TRUE;
     }
 }
+
+// Custom features
+
+static void Task_AfterItemUse_StayIfMore(u8 taskId)
+{
+    if (IsPartyMenuTextPrinterActive() == TRUE)
+        return;
+
+    // If we ran out of the item, behave exactly like the vanilla close path.
+    if (!CheckBagHasItem(gSpecialVar_ItemId, 1))
+    {
+        if (gPartyMenuUseExitCallback == FALSE)
+            sPartyMenuInternal->exitCallback = NULL;
+
+        Task_ClosePartyMenu(taskId);
+        return;
+    }
+    gTasks[taskId].func = Task_HandleChooseMonInput;
+}
+
