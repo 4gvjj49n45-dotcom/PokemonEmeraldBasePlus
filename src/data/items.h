@@ -4551,4 +4551,17 @@ const struct Item gItems[] =
         .type = ITEM_USE_FIELD,
         .fieldUseFunc = ItemUseOutOfBattle_PortaPc,
     },
+
+    [ITEM_MEDICINE] =
+    {
+        .name = _("MEDICINE"),
+        .itemId = ITEM_MEDICINE,
+        .price = 0,
+        .description = sMedicineDesc,
+        .importance = 1,
+        .registrability = TRUE,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_PocketMedicine,
+    },
 };

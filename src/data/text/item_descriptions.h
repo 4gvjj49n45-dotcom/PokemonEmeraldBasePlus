@@ -1555,3 +1555,7 @@ static const u8 sPortaPcDesc[] = _(
     "A portable PC, \n"
     "incredibly useful\n"
     "for nuzlockes.");
+
+static const u8 sMedicineDesc[] = _(
+    "An efficient way to\n"
+    "heal your party.");
