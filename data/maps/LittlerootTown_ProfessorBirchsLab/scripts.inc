@@ -138,6 +138,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_GivePortaPc::
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_GetPortaPc, MSGBOX_DEFAULT
 	giveitem ITEM_PORTA_PC
 	giveitem ITEM_MEDICINE
+	giveitem ITEM_ENDLESS_CANDY
 	releaseall
 	end
 
