@@ -515,7 +515,6 @@ extern const u8 MauvilleCity_PokemonCenter_1F_Text_HotSpringsStory[];
 extern const u8 LittlerootTown_BrendansHouse_2F_EventScript_PC[];
 extern const u8 LittlerootTown_MaysHouse_2F_EventScript_PC[];
 extern const u8 EventScript_PC[];
-extern const u8 EventScript_PORTAPC[];
 extern const u8 EventScript_TestSignpostMsg[];
 extern const u8 EventScript_HiddenItemScript[];
 extern const u8 EventScript_TV[];
@@ -612,5 +611,9 @@ extern const u8 EventScript_TradeCenter_Chair1[];
 extern const u8 EventScript_TradeCenter_Chair0[];
 extern const u8 EventScript_ConfirmLeaveCableClubRoom[];
 extern const u8 EventScript_TerminateLink[];
+
+// Custom features
+extern const u8 EventScript_PORTAPC[];
+extern const u8 EventScript_USEMEDICINE[];
 
 #endif // GUARD_EVENT_SCRIPTS_H

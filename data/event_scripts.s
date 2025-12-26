@@ -650,6 +650,7 @@ EventScript_SetBrineyLocation_Route109::
 	return
 
 	.include "data/scripts/pkmn_center_nurse.inc"
+	.include "data/scripts/medicineHeal.inc"
 	.include "data/scripts/obtain_item.inc"
 	.include "data/scripts/record_mix.inc"
 	.include "data/scripts/pc.inc"
@@ -832,6 +833,7 @@ Common_EventScript_PlayerHandedOverTheItem::
 	.include "data/text/record_mix.inc"
 	.include "data/text/pc.inc"
 	.include "data/text/pkmn_center_nurse.inc"
+	.include "data/text/medicineHeal.inc"
 	.include "data/text/mart_clerk.inc"
 	.include "data/text/obtain_item.inc"
 
