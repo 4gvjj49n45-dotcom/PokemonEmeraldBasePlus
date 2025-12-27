@@ -317,6 +317,12 @@ extern const u8 gText_Frame[];
 extern const u8 gText_OptionMenuCancel[];
 extern const u8 gText_ButtonMode[];
 
+// Level caps
+extern const u8 gText_LevelCaps[];
+extern const u8 gText_LevelCapsOff[];
+extern const u8 gText_LevelCapsOn[];
+extern const u8 gText_LevelCapMet[];
+
 extern const u8 gText_MaleSymbol[];
 extern const u8 gText_FemaleSymbol[];
 
