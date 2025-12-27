@@ -704,6 +704,6 @@ static void LevelCap_DrawChoices(u8 selection)
     styles[1] = 0;
     styles[selection] = 1;
 
-    DrawOptionMenuChoice(gText_LevelCapsOn, 104, MENUITEM_LEVELCAPS * 16, styles[0]);
-    DrawOptionMenuChoice(gText_LevelCapsOff, GetStringRightAlignXOffset(FONT_NORMAL, gText_LevelCapsOff, 198), MENUITEM_LEVELCAPS * 16, styles[1]);
+    DrawOptionMenuChoice(gText_LevelCapsOff, 104, MENUITEM_LEVELCAPS * 16, styles[0]);
+    DrawOptionMenuChoice(gText_LevelCapsOn, GetStringRightAlignXOffset(FONT_NORMAL, gText_LevelCapsOn, 198), MENUITEM_LEVELCAPS * 16, styles[1]);
 }
