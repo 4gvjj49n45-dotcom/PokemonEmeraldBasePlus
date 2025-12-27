@@ -4962,6 +4962,13 @@ void ItemUseCB_RareCandy(u8 taskId, TaskFunc task)
     s16 *arrayPtr = ptr->data;
     u16 *itemPtr = &gSpecialVar_ItemId;
     bool8 cannotUseEffect;
+    bool8 retain;
+
+    if (*itemPtr == ITEM_ENDLESS_CANDY)
+    {
+        *itemPtr = ITEM_RARE_CANDY;
+        retain = TRUE;
+    }
 
     if (GetMonData(mon, MON_DATA_LEVEL) != MAX_LEVEL)
     {
@@ -4993,6 +5000,11 @@ void ItemUseCB_RareCandy(u8 taskId, TaskFunc task)
         DisplayPartyMenuMessage(gStringVar4, TRUE);
         ScheduleBgCopyTilemapToVram(2);
         gTasks[taskId].func = Task_DisplayLevelUpStatsPg1;
+    }
+
+    if (retain) 
+    {
+        gSpecialVar_ItemId = ITEM_ENDLESS_CANDY;
     }
 }
 
@@ -5109,7 +5121,7 @@ static void PartyMenuTryEvolution(u8 taskId)
     }
     else
     {
-        gTasks[taskId].func = Task_ClosePartyMenuAfterText;
+        gTasks[taskId].func = Task_AfterItemUse_StayIfMore;
     }
 }
 
@@ -6436,11 +6448,17 @@ void IsLastMonThatKnowsSurf(void)
 
 static void Task_AfterItemUse_StayIfMore(u8 taskId)
 {
+    bool8 endCheck = FALSE;
+
     if (IsPartyMenuTextPrinterActive() == TRUE)
         return;
 
+    if (gSpecialVar_ItemId == ITEM_ENDLESS_CANDY){
+        endCheck = TRUE;
+    }
+
     // If we ran out of the item, behave exactly like the vanilla close path.
-    if (!CheckBagHasItem(gSpecialVar_ItemId, 1))
+    if (!CheckBagHasItem(gSpecialVar_ItemId, 1) && !endCheck)
     {
         if (gPartyMenuUseExitCallback == FALSE)
             sPartyMenuInternal->exitCallback = NULL;
