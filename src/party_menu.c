@@ -4961,6 +4961,7 @@ void ItemUseCB_RareCandy(u8 taskId, TaskFunc task)
     struct PartyMenuInternal *ptr = sPartyMenuInternal;
     s16 *arrayPtr = ptr->data;
     u16 *itemPtr = &gSpecialVar_ItemId;
+    u8 level = GetMonData(mon, MON_DATA_LEVEL);
     bool8 cannotUseEffect;
     bool8 retain;
 
@@ -4981,6 +4982,12 @@ void ItemUseCB_RareCandy(u8 taskId, TaskFunc task)
         cannotUseEffect = TRUE;
     }
     PlaySE(SE_SELECT);
+
+    if (VarGet(VAR_LEVEL_CAP) <= level && retain)
+    {
+	    cannotUseEffect = TRUE;
+    }
+
     if (cannotUseEffect)
     {
         gPartyMenuUseExitCallback = FALSE;
