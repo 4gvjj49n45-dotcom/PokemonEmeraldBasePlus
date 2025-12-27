@@ -35,6 +35,8 @@
 #include "constants/songs.h"
 #include "constants/trainers.h"
 #include "constants/rgb.h"
+#include "event_data.h"
+
 
 static void PlayerHandleGetMonData(void);
 static void PlayerHandleSetMonData(void);
@@ -1165,6 +1167,11 @@ static void Task_GiveExpToMon(u8 taskId)
         u32 currExp = GetMonData(mon, MON_DATA_EXP);
         u32 nextLvlExp = gExperienceTables[gSpeciesInfo[species].growthRate][level + 1];
 
+        if (VarGet(VAR_LEVEL_CAP) <= level)
+        {
+	        (gainedExp = 0);
+        }
+
         if (currExp + gainedExp >= nextLvlExp)
         {
             u8 savedActiveBattler;
@@ -1209,6 +1216,11 @@ static void Task_PrepareToGiveExpWithExpBar(u8 taskId)
     u32 currLvlExp = gExperienceTables[gSpeciesInfo[species].growthRate][level];
     u32 expToNextLvl;
 
+    if (VarGet(VAR_LEVEL_CAP) <= level)
+    {
+        (gainedExp = 0);
+    }
+
     exp -= currLvlExp;
     expToNextLvl = gExperienceTables[gSpeciesInfo[species].growthRate][level + 1] - currLvlExp;
     SetBattleBarStruct(battler, gHealthboxSpriteIds[battler], expToNextLvl, exp, -gainedExp);
@@ -1229,8 +1241,18 @@ static void Task_GiveExpWithExpBar(u8 taskId)
         u8 battler = gTasks[taskId].tExpTask_battler;
         s16 newExpPoints;
 
+        u8 monIndex = gTasks[taskId].tExpTask_monId;
+        struct Pokemon *mon = &gPlayerParty[monIndex];
+        u8 level = GetMonData(mon, MON_DATA_LEVEL);
+
         newExpPoints = MoveBattleBar(battler, gHealthboxSpriteIds[battler], EXP_BAR, 0);
         SetHealthboxSpriteVisible(gHealthboxSpriteIds[battler]);
+
+        if (VarGet(VAR_LEVEL_CAP) <= level)
+        {
+	        (gainedExp = 0);
+        }
+
         if (newExpPoints == -1) // The bar has been filled with given exp points.
         {
             u8 level;
