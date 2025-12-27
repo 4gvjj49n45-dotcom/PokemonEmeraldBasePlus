@@ -1185,7 +1185,6 @@ static void ItemUseOnFieldCB_PocketMedicine(u8 taskId)
 void ItemUseOutOfBattle_EndlessCandy(u8 taskId)
 {
     gItemUseCB = ItemUseCB_RareCandy;
-    gSpecialVar_ItemId = ITEM_RARE_CANDY;
     SetUpItemUseCallback(taskId);
 }
 
