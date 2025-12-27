@@ -47,6 +47,7 @@
 #include "constants/items.h"
 
 extern const u8 EventScript_ResetAllMapFlags[];
+extern const u8 EventScript_SetLevelCaps[];
 
 static void ClearFrontierRecord(void);
 static void WarpToTruck(void);
@@ -204,6 +205,7 @@ void NewGameInitData(void)
     WipeTrainerNameRecords();
     ResetTrainerHillResults();
     ResetContestLinkResults();
+    RunScriptImmediately(EventScript_SetLevelCaps);
 }
 
 static void ResetMiniGamesRecords(void)
