@@ -1167,9 +1167,12 @@ static void Task_GiveExpToMon(u8 taskId)
         u32 currExp = GetMonData(mon, MON_DATA_EXP);
         u32 nextLvlExp = gExperienceTables[gSpeciesInfo[species].growthRate][level + 1];
 
-        if (VarGet(VAR_LEVEL_CAP) <= level)
+        if (gSaveBlock2Ptr->optionsLevelCap)
         {
-	        (gainedExp = 0);
+            if (VarGet(VAR_LEVEL_CAP) <= level)
+            {
+	            (gainedExp = 0);
+            }
         }
 
         if (currExp + gainedExp >= nextLvlExp)
@@ -1216,9 +1219,12 @@ static void Task_PrepareToGiveExpWithExpBar(u8 taskId)
     u32 currLvlExp = gExperienceTables[gSpeciesInfo[species].growthRate][level];
     u32 expToNextLvl;
 
-    if (VarGet(VAR_LEVEL_CAP) <= level)
+    if (gSaveBlock2Ptr->optionsLevelCap) 
     {
-        (gainedExp = 0);
+        if (VarGet(VAR_LEVEL_CAP) <= level)
+        {
+            (gainedExp = 0);
+        }
     }
 
     exp -= currLvlExp;
@@ -1248,9 +1254,12 @@ static void Task_GiveExpWithExpBar(u8 taskId)
         newExpPoints = MoveBattleBar(battler, gHealthboxSpriteIds[battler], EXP_BAR, 0);
         SetHealthboxSpriteVisible(gHealthboxSpriteIds[battler]);
 
-        if (VarGet(VAR_LEVEL_CAP) <= level)
+        if (gSaveBlock2Ptr->optionsLevelCap)
         {
-	        (gainedExp = 0);
+            if (VarGet(VAR_LEVEL_CAP) <= level)
+            {
+	            (gainedExp = 0);
+            }
         }
 
         if (newExpPoints == -1) // The bar has been filled with given exp points.

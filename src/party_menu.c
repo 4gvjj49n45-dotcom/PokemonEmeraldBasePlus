@@ -4971,47 +4971,53 @@ void ItemUseCB_RareCandy(u8 taskId, TaskFunc task)
         retain = TRUE;
     }
 
-    if (GetMonData(mon, MON_DATA_LEVEL) != MAX_LEVEL)
+    if (gSaveBlock2Ptr->optionsLevelCap)
     {
-        BufferMonStatsToTaskData(mon, arrayPtr);
-        cannotUseEffect = ExecuteTableBasedItemEffect_(gPartyMenu.slotId, *itemPtr, 0);
-        BufferMonStatsToTaskData(mon, &ptr->data[NUM_STATS]);
+        if (VarGet(VAR_LEVEL_CAP) <= level && retain)
+        {
+            DisplayPartyMenuMessage(gText_LevelCapMet, TRUE);
+        }
     }
     else
     {
-        cannotUseEffect = TRUE;
-    }
-    PlaySE(SE_SELECT);
 
-    if (VarGet(VAR_LEVEL_CAP) <= level && retain)
-    {
-	    cannotUseEffect = TRUE;
-    }
+        if (GetMonData(mon, MON_DATA_LEVEL) != MAX_LEVEL)
+        {
+            BufferMonStatsToTaskData(mon, arrayPtr);
+            cannotUseEffect = ExecuteTableBasedItemEffect_(gPartyMenu.slotId, *itemPtr, 0);
+            BufferMonStatsToTaskData(mon, &ptr->data[NUM_STATS]);
+        }
+        else
+        {
+            cannotUseEffect = TRUE;
+        }
+        PlaySE(SE_SELECT);
 
-    if (cannotUseEffect)
-    {
-        gPartyMenuUseExitCallback = FALSE;
-        DisplayPartyMenuMessage(gText_WontHaveEffect, TRUE);
-        ScheduleBgCopyTilemapToVram(2);
-        gTasks[taskId].func = task;
-    }
-    else
-    {
-        gPartyMenuUseExitCallback = TRUE;
-        PlayFanfareByFanfareNum(FANFARE_LEVEL_UP);
-        UpdateMonDisplayInfoAfterRareCandy(gPartyMenu.slotId, mon);
-        RemoveBagItem(gSpecialVar_ItemId, 1);
-        GetMonNickname(mon, gStringVar1);
-        ConvertIntToDecimalStringN(gStringVar2, GetMonData(mon, MON_DATA_LEVEL), STR_CONV_MODE_LEFT_ALIGN, 3);
-        StringExpandPlaceholders(gStringVar4, gText_PkmnElevatedToLvVar2);
-        DisplayPartyMenuMessage(gStringVar4, TRUE);
-        ScheduleBgCopyTilemapToVram(2);
-        gTasks[taskId].func = Task_DisplayLevelUpStatsPg1;
-    }
+        if (cannotUseEffect)
+        {
+            gPartyMenuUseExitCallback = FALSE;
+            DisplayPartyMenuMessage(gText_WontHaveEffect, TRUE);
+            ScheduleBgCopyTilemapToVram(2);
+            gTasks[taskId].func = task;
+        }
+        else
+        {
+            gPartyMenuUseExitCallback = TRUE;
+            PlayFanfareByFanfareNum(FANFARE_LEVEL_UP);
+            UpdateMonDisplayInfoAfterRareCandy(gPartyMenu.slotId, mon);
+            RemoveBagItem(gSpecialVar_ItemId, 1);
+            GetMonNickname(mon, gStringVar1);
+            ConvertIntToDecimalStringN(gStringVar2, GetMonData(mon, MON_DATA_LEVEL), STR_CONV_MODE_LEFT_ALIGN, 3);
+            StringExpandPlaceholders(gStringVar4, gText_PkmnElevatedToLvVar2);
+            DisplayPartyMenuMessage(gStringVar4, TRUE);
+            ScheduleBgCopyTilemapToVram(2);
+            gTasks[taskId].func = Task_DisplayLevelUpStatsPg1;
+        }
 
-    if (retain) 
-    {
-        gSpecialVar_ItemId = ITEM_ENDLESS_CANDY;
+        if (retain) 
+        {
+            gSpecialVar_ItemId = ITEM_ENDLESS_CANDY;
+        }
     }
 }
 
