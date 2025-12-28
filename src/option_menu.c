@@ -15,6 +15,8 @@
 #include "window.h"
 #include "gba/m4a_internal.h"
 #include "constants/rgb.h"
+#include "string_util.h" // Allows ConvertIntToDecimalStringN
+#include "event_data.h"   // VarGet/VarSet
 
 #define tMenuSelection data[0]
 #define tTextSpeed data[1]
@@ -645,10 +647,24 @@ static void DrawOptionMenuTexts(void)
     u8 i;
 
     FillWindowPixelBuffer(WIN_OPTIONS, PIXEL_FILL(1));
+
     for (i = 0; i < MENUITEM_COUNT; i++)
-        AddTextPrinterParameterized(WIN_OPTIONS, FONT_NORMAL, sOptionMenuItemsNames[i], 8, (i * 16) + 1, TEXT_SKIP_DRAW, NULL);
+    {
+        if (i == MENUITEM_LEVELCAPS)
+        {
+            ConvertIntToDecimalStringN(gStringVar1, VarGet(VAR_LEVEL_CAP), STR_CONV_MODE_LEFT_ALIGN, 3); // Fills gStringVar1
+            StringExpandPlaceholders(gStringVar4, gText_LevelCaps); // Performs the substitution
+            AddTextPrinterParameterized(WIN_OPTIONS, FONT_NORMAL, gStringVar4, 8, (i * 16) + 1, TEXT_SKIP_DRAW, NULL); // Actually fills gText_LevelCaps visually
+        }
+        else
+        {
+            AddTextPrinterParameterized(WIN_OPTIONS, FONT_NORMAL, sOptionMenuItemsNames[i], 8, (i * 16) + 1, TEXT_SKIP_DRAW, NULL);
+        }
+    }
+
     CopyWindowToVram(WIN_OPTIONS, COPYWIN_FULL);
 }
+
 
 #define TILE_TOP_CORNER_L 0x1A2
 #define TILE_TOP_EDGE     0x1A3
