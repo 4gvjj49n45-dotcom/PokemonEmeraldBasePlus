@@ -275,6 +275,4 @@ EventScript_ResetAllMapFlags::
 	call EventScript_ResetAllBerries
 	end
 
-EventScript_SetLevelCaps::
-	setvar VAR_LEVEL_CAP, 15
 
