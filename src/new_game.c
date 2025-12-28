@@ -206,6 +206,7 @@ void NewGameInitData(void)
     WipeTrainerNameRecords();
     ResetTrainerHillResults();
     ResetContestLinkResults();
+    VarSet(VAR_LEVEL_CAP, 15);
 }
 
 static void ResetMiniGamesRecords(void)
