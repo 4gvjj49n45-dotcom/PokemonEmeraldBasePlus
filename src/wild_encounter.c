@@ -424,6 +424,11 @@ static bool8 TryGenerateWildMon(const struct WildPokemonInfo *wildMonInfo, u8 ar
     u8 wildMonIndex = 0;
     u8 level;
 
+    if(VarGet(VAR_ENDLESS_REPEL) == 1) // Endless Repel
+    {
+        return FALSE;
+    }
+
     switch (area)
     {
     case WILD_AREA_LAND:
@@ -554,6 +559,11 @@ bool8 StandardWildEncounter(u16 curMetatileBehavior, u16 prevMetatileBehavior)
     u16 headerId;
     struct Roamer *roamer;
 
+    if(VarGet(VAR_ENDLESS_REPEL) == 1) // Endless Repel
+    {
+        return FALSE;
+    }
+
     if (sWildEncountersDisabled == TRUE)
         return FALSE;
 
@@ -669,28 +679,32 @@ void RockSmashWildEncounter(void)
 {
     u16 headerId = GetCurrentMapWildMonHeaderId();
 
-    if (headerId != HEADER_NONE)
+    if(VarGet(VAR_ENDLESS_REPEL) == 0) // Endless Repel
     {
-        const struct WildPokemonInfo *wildPokemonInfo = gWildMonHeaders[headerId].rockSmashMonsInfo;
 
-        if (wildPokemonInfo == NULL)
+        if (headerId != HEADER_NONE)
         {
-            gSpecialVar_Result = FALSE;
-        }
-        else if (WildEncounterCheck(wildPokemonInfo->encounterRate, TRUE) == TRUE
-         && TryGenerateWildMon(wildPokemonInfo, WILD_AREA_ROCKS, WILD_CHECK_REPEL | WILD_CHECK_KEEN_EYE) == TRUE)
-        {
-            BattleSetup_StartWildBattle();
-            gSpecialVar_Result = TRUE;
+            const struct WildPokemonInfo *wildPokemonInfo = gWildMonHeaders[headerId].rockSmashMonsInfo;
+
+            if (wildPokemonInfo == NULL)
+            {
+                gSpecialVar_Result = FALSE;
+            }
+            else if (WildEncounterCheck(wildPokemonInfo->encounterRate, TRUE) == TRUE
+             && TryGenerateWildMon(wildPokemonInfo, WILD_AREA_ROCKS, WILD_CHECK_REPEL | WILD_CHECK_KEEN_EYE) == TRUE)
+            {
+                BattleSetup_StartWildBattle();
+                gSpecialVar_Result = TRUE;
+            }
+            else
+            {
+                gSpecialVar_Result = FALSE;
+            }
         }
         else
         {
             gSpecialVar_Result = FALSE;
         }
-    }
-    else
-    {
-        gSpecialVar_Result = FALSE;
     }
 }
 
