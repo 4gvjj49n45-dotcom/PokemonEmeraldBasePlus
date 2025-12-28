@@ -72,6 +72,7 @@ static void SetDistanceOfClosestHiddenItem(u8, s16, s16);
 static void CB2_OpenPokeblockFromBag(void);
 static void ItemUseOnFieldCB_PortaPc(u8 taskId);
 static void ItemUseOnFieldCB_PocketMedicine(u8 taskId);
+static void ItemUseOnFieldCB_EndlessRepel(u8 taskId);
 
 
 // EWRAM variables
@@ -1186,6 +1187,27 @@ void ItemUseOutOfBattle_EndlessCandy(u8 taskId)
 {
     gItemUseCB = ItemUseCB_RareCandy;
     SetUpItemUseCallback(taskId);
+}
+
+void ItemUseOutOfBattle_EndlessRepel(u8 taskId)
+{
+    // Optional: prevent in link / special states, match other key items if needed
+    if (MenuHelpers_IsLinkActive() == TRUE)
+    {
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+        return;
+    }
+
+    // Use on the field:
+    sItemUseOnFieldCB = ItemUseOnFieldCB_EndlessRepel;
+    SetUpItemUseOnFieldCallback(taskId);
+}
+
+static void ItemUseOnFieldCB_EndlessRepel(u8 taskId)
+{
+    LockPlayerFieldControls();
+    ScriptContext_SetupScript(EventScript_USEREPEL);
+    DestroyTask(taskId);
 }
 
 
