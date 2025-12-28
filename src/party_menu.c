@@ -4964,6 +4964,7 @@ void ItemUseCB_RareCandy(u8 taskId, TaskFunc task)
     u8 level = GetMonData(mon, MON_DATA_LEVEL);
     bool8 cannotUseEffect;
     bool8 retain;
+    bool8 carryOn;
 
     if (*itemPtr == ITEM_ENDLESS_CANDY)
     {
@@ -4971,14 +4972,17 @@ void ItemUseCB_RareCandy(u8 taskId, TaskFunc task)
         retain = TRUE;
     }
 
+    carryOn = TRUE;
+
     if (gSaveBlock2Ptr->optionsLevelCap)
     {
         if (VarGet(VAR_LEVEL_CAP) <= level && retain)
         {
+            carryOn = FALSE;
             DisplayPartyMenuMessage(gText_LevelCapMet, TRUE);
         }
     }
-    else
+    if (carryOn)
     {
 
         if (GetMonData(mon, MON_DATA_LEVEL) != MAX_LEVEL)
