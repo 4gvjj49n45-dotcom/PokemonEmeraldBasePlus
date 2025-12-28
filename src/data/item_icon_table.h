@@ -405,6 +405,7 @@ const u32 *const gItemIconTable[ITEMS_COUNT + 1][2] =
     [ITEM_PORTA_PC] = {gItemIcon_PokeblockCase, gItemIconPalette_PokeblockCase},
     [ITEM_MEDICINE] = {gItemIcon_SacredAsh, gItemIconPalette_SacredAsh},
     [ITEM_ENDLESS_CANDY] = {gItemIcon_RareCandy, gItemIconPalette_RareCandy},
+    [ITEM_ENDLESS_REPEL] = {gItemIcon_Repel, gItemIconPalette_MaxRepel},
     // Return to field arrow
     [ITEMS_COUNT] = {gItemIcon_ReturnToFieldArrow, gItemIconPalette_ReturnToFieldArrow},
 };

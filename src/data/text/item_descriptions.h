@@ -1563,3 +1563,7 @@ static const u8 sMedicineDesc[] = _(
 static const u8 sEndlessCandyDesc[] = _(
     "Unlimited rare \n"
     "candies.");
+
+static const u8 sEndlessRepelDesc[] = _(
+    "Repels wild \n"
+    "Pokemon endlessly.");

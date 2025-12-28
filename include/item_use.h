@@ -37,6 +37,7 @@ u8 CheckIfItemIsTMHMOrEvolutionStone(u16 itemId);
 void ItemUseOutOfBattle_PortaPc(u8 taskId);
 void ItemUseOutOfBattle_PocketMedicine(u8 taskId);
 void ItemUseOutOfBattle_EndlessCandy(u8 taskId);
+void ItemUseOutOfBattle_EndlessRepel(u8 taskId);
 
 
 #endif // GUARD_ITEM_USE_H

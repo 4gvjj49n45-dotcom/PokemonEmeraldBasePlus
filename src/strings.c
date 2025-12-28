@@ -1556,6 +1556,10 @@ const u8 gText_LevelCapsOff[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}OFF");
 const u8 gText_LevelCapsOn[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}ON");
 const u8 gText_LevelCapMet[] = _("Cannot use endless candies\n to exceed level cap.");
 
+// Endless Repel
+const u8 gText_EndlessRepel[] = _("Repel wild Pokemon indefinitely.");
+const u8 gText_StopEndlessRepel[] = _("Repellent turned off.");
+
 // Easy chat group names
 const u8 gEasyChatGroupName_Pokemon[] = _("POKéMON");
 const u8 gEasyChatGroupName_Trainer[] = _("TRAINER");

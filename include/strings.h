@@ -323,6 +323,11 @@ extern const u8 gText_LevelCapsOff[];
 extern const u8 gText_LevelCapsOn[];
 extern const u8 gText_LevelCapMet[];
 
+// Endless Repel
+
+extern const u8 gText_EndlessRepel[];
+extern const u8 gText_StopEndlessRepel[];
+
 extern const u8 gText_MaleSymbol[];
 extern const u8 gText_FemaleSymbol[];
 
