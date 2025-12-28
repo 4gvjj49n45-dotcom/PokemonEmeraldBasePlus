@@ -615,5 +615,8 @@ extern const u8 EventScript_TerminateLink[];
 // Custom features
 extern const u8 EventScript_PORTAPC[];
 extern const u8 EventScript_USEMEDICINE[];
+extern const u8 EventScript_USEREPEL[];
+extern const u8 EventScript_USEENDLESS[];
+extern const u8 EventScript_ENDENDLESS[];
 
 #endif // GUARD_EVENT_SCRIPTS_H

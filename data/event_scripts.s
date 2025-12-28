@@ -651,6 +651,8 @@ EventScript_SetBrineyLocation_Route109::
 
 	.include "data/scripts/pkmn_center_nurse.inc"
 	.include "data/scripts/medicineHeal.inc"
+	.include "data/scripts/endlessRepel.inc"
+	.include "data/scripts/level_cap.inc"
 	.include "data/scripts/obtain_item.inc"
 	.include "data/scripts/record_mix.inc"
 	.include "data/scripts/pc.inc"
