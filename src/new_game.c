@@ -45,6 +45,7 @@
 #include "mystery_gift.h"
 #include "union_room_chat.h"
 #include "constants/items.h"
+#include "constants/vars.h"   // Allows use of vars
 
 extern const u8 EventScript_ResetAllMapFlags[];
 extern const u8 EventScript_SetLevelCaps[];
@@ -205,7 +206,6 @@ void NewGameInitData(void)
     WipeTrainerNameRecords();
     ResetTrainerHillResults();
     ResetContestLinkResults();
-    RunScriptImmediately(EventScript_SetLevelCaps);
 }
 
 static void ResetMiniGamesRecords(void)
