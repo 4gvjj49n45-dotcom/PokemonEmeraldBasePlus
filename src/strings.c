@@ -1551,7 +1551,7 @@ const u8 gText_XSentOverY[] = _("{STR_VAR_1} sent over {STR_VAR_3}.");
 const u8 gText_TakeGoodCareOfX[] = _("Take good care of {STR_VAR_3}!");
 
 // Level caps
-const u8 gText_LevelCaps[] = _("Level Caps:");
+const u8 gText_LevelCaps[] = _("Level Cap: {STR_VAR_1}");
 const u8 gText_LevelCapsOff[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}OFF");
 const u8 gText_LevelCapsOn[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}ON");
 const u8 gText_LevelCapMet[] = _("Cannot use endless candies\n to exceed level cap.");
