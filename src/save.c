@@ -11,6 +11,8 @@
 #include "trainer_hill.h"
 #include "link.h"
 #include "constants/game_stat.h"
+#include "event_data.h"   // VarGet/VarSet
+#include "constants/vars.h"   // Allows use of vars
 
 static u16 CalculateChecksum(void *, u16);
 static bool8 ReadFlashSector(u8, struct SaveSector *);
@@ -877,7 +879,6 @@ u8 LoadGameSave(u8 saveType)
         gSaveFileStatus = SAVE_STATUS_NO_FLASH;
         return SAVE_STATUS_ERROR;
     }
-
     UpdateSaveAddresses();
     switch (saveType)
     {
@@ -887,11 +888,13 @@ u8 LoadGameSave(u8 saveType)
         CopyPartyAndObjectsFromSave();
         gSaveFileStatus = status;
         gGameContinueCallback = NULL;
+        VarSet(VAR_ENDLESS_REPEL, 0);
         break;
     case SAVE_HALL_OF_FAME:
         status = TryLoadSaveSector(SECTOR_ID_HOF_1, gDecompressionBuffer, SECTOR_DATA_SIZE);
         if (status == SAVE_STATUS_OK)
             status = TryLoadSaveSector(SECTOR_ID_HOF_2, &gDecompressionBuffer[SECTOR_DATA_SIZE], SECTOR_DATA_SIZE);
+        VarSet(VAR_ENDLESS_REPEL, 0);
         break;
     }
 
