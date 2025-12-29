@@ -4968,50 +4968,57 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
                     {
                     case 0: // ITEM4_EV_HP
                     case 1: // ITEM4_EV_ATK
-                        evCount = GetMonEVCount(mon);
-                        temp2 = itemEffect[itemEffectParam];
-                        dataSigned = GetMonData(mon, sGetMonDataEVConstants[temp1], NULL);
-                        evChange = temp2;
-
-                        if (evChange > 0) // Increasing EV (HP or Atk)
+                        if (gSaveBlock2Ptr->determineEVs == 0) // Only runs if EVs are on
                         {
-                            // Has EV increase limit already been reached?
-                            if (evCount >= MAX_TOTAL_EVS)
-                                return TRUE;
-                            if (dataSigned >= EV_ITEM_RAISE_LIMIT)
-                                break;
+                            evCount = GetMonEVCount(mon);
+                            temp2 = itemEffect[itemEffectParam];
+                            dataSigned = GetMonData(mon, sGetMonDataEVConstants[temp1], NULL);
+                            evChange = temp2;
 
-                            // Limit the increase
-                            if (dataSigned + evChange > EV_ITEM_RAISE_LIMIT)
-                                temp2 = EV_ITEM_RAISE_LIMIT - (dataSigned + evChange) + evChange;
-                            else
-                                temp2 = evChange;
-
-                            if (evCount + temp2 > MAX_TOTAL_EVS)
-                                temp2 += MAX_TOTAL_EVS - (evCount + temp2);
-
-                            dataSigned += temp2;
-                        }
-                        else // Decreasing EV (HP or Atk)
-                        {
-                            if (dataSigned == 0)
+                            if (evChange > 0) // Increasing EV (HP or Atk)
                             {
-                                // No EVs to lose, but make sure friendship updates anyway
-                                friendshipOnly = TRUE;
-                                itemEffectParam++;
-                                break;
-                            }
-                            dataSigned += evChange;
-                            if (dataSigned < 0)
-                                dataSigned = 0;
-                        }
+                                // Has EV increase limit already been reached?
+                                if (evCount >= MAX_TOTAL_EVS)
+                                    return TRUE;
+                                if (dataSigned >= EV_ITEM_RAISE_LIMIT)
+                                    break;
 
-                        // Update EVs and stats
-                        SetMonData(mon, sGetMonDataEVConstants[temp1], &dataSigned);
-                        CalculateMonStats(mon);
-                        itemEffectParam++;
-                        retVal = FALSE;
-                        break;
+                                // Limit the increase
+                                if (dataSigned + evChange > EV_ITEM_RAISE_LIMIT)
+                                    temp2 = EV_ITEM_RAISE_LIMIT - (dataSigned + evChange) + evChange;
+                                else
+                                    temp2 = evChange;
+
+                                if (evCount + temp2 > MAX_TOTAL_EVS)
+                                    temp2 += MAX_TOTAL_EVS - (evCount + temp2);
+
+                                dataSigned += temp2;
+                            }
+                            else // Decreasing EV (HP or Atk)
+                            {
+                                if (dataSigned == 0)
+                                {
+                                    // No EVs to lose, but make sure friendship updates anyway
+                                    friendshipOnly = TRUE;
+                                    itemEffectParam++;
+                                    break;
+                                }
+                                dataSigned += evChange;
+                                if (dataSigned < 0)
+                                    dataSigned = 0;
+                            }
+
+                            // Update EVs and stats
+                            SetMonData(mon, sGetMonDataEVConstants[temp1], &dataSigned);
+                            CalculateMonStats(mon);
+                            itemEffectParam++;
+                            retVal = FALSE;
+                            break;
+                        }
+                        else
+                        {
+                            return TRUE;
+                        }
 
                     case 2: // ITEM4_HEAL_HP
                         // If Revive, update number of times revive has been used
@@ -5194,49 +5201,56 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
                     case 1: // ITEM5_EV_SPEED
                     case 2: // ITEM5_EV_SPDEF
                     case 3: // ITEM5_EV_SPATK
-                        evCount = GetMonEVCount(mon);
-                        temp2 = itemEffect[itemEffectParam];
-                        dataSigned = GetMonData(mon, sGetMonDataEVConstants[temp1 + 2], NULL);
-                        evChange = temp2;
-                        if (evChange > 0) // Increasing EV
+                        if (gSaveBlock2Ptr->determineEVs == 0) // Only runs if EVs are on
                         {
-                            // Has EV increase limit already been reached?
-                            if (evCount >= MAX_TOTAL_EVS)
-                                return TRUE;
-                            if (dataSigned >= EV_ITEM_RAISE_LIMIT)
-                                break;
-
-                            // Limit the increase
-                            if (dataSigned + evChange > EV_ITEM_RAISE_LIMIT)
-                                temp2 = EV_ITEM_RAISE_LIMIT - (dataSigned + evChange) + evChange;
-                            else
-                                temp2 = evChange;
-
-                            if (evCount + temp2 > MAX_TOTAL_EVS)
-                                temp2 += MAX_TOTAL_EVS - (evCount + temp2);
-
-                            dataSigned += temp2;
-                        }
-                        else // Decreasing EV
-                        {
-                            if (dataSigned == 0)
+                            evCount = GetMonEVCount(mon);
+                            temp2 = itemEffect[itemEffectParam];
+                            dataSigned = GetMonData(mon, sGetMonDataEVConstants[temp1 + 2], NULL);
+                            evChange = temp2;
+                            if (evChange > 0) // Increasing EV
                             {
-                                // No EVs to lose, but make sure friendship updates anyway
-                                friendshipOnly = TRUE;
-                                itemEffectParam++;
-                                break;
-                            }
-                            dataSigned += evChange;
-                            if (dataSigned < 0)
-                                dataSigned = 0;
-                        }
+                                // Has EV increase limit already been reached?
+                                if (evCount >= MAX_TOTAL_EVS)
+                                    return TRUE;
+                                if (dataSigned >= EV_ITEM_RAISE_LIMIT)
+                                    break;
 
-                        // Update EVs and stats
-                        SetMonData(mon, sGetMonDataEVConstants[temp1 + 2], &dataSigned);
-                        CalculateMonStats(mon);
-                        retVal = FALSE;
-                        itemEffectParam++;
-                        break;
+                                // Limit the increase
+                                if (dataSigned + evChange > EV_ITEM_RAISE_LIMIT)
+                                    temp2 = EV_ITEM_RAISE_LIMIT - (dataSigned + evChange) + evChange;
+                                else
+                                    temp2 = evChange;
+
+                                if (evCount + temp2 > MAX_TOTAL_EVS)
+                                    temp2 += MAX_TOTAL_EVS - (evCount + temp2);
+
+                                dataSigned += temp2;
+                            }
+                            else // Decreasing EV
+                            {
+                                if (dataSigned == 0)
+                                {
+                                    // No EVs to lose, but make sure friendship updates anyway
+                                    friendshipOnly = TRUE;
+                                    itemEffectParam++;
+                                    break;
+                                }
+                                dataSigned += evChange;
+                                if (dataSigned < 0)
+                                    dataSigned = 0;
+                            }
+
+                            // Update EVs and stats
+                            SetMonData(mon, sGetMonDataEVConstants[temp1 + 2], &dataSigned);
+                            CalculateMonStats(mon);
+                            retVal = FALSE;
+                            itemEffectParam++;
+                            break;
+                        }
+                        else
+                        {
+                            return TRUE;
+                        }
 
                     case 4: // ITEM5_PP_MAX
                         dataUnsigned = (GetMonData(mon, MON_DATA_PP_BONUSES, NULL) & gPPUpGetMask[moveIndex]) >> (moveIndex * 2);
@@ -5980,73 +5994,76 @@ void MonGainEVs(struct Pokemon *mon, u16 defeatedSpecies)
     u8 holdEffect;
     int i, multiplier;
 
-    for (i = 0; i < NUM_STATS; i++)
+    if (gSaveBlock2Ptr->determineEVs == 0) // Only runs if EVs are on
     {
-        evs[i] = GetMonData(mon, MON_DATA_HP_EV + i, 0);
-        totalEVs += evs[i];
-    }
-
-    for (i = 0; i < NUM_STATS; i++)
-    {
-        if (totalEVs >= MAX_TOTAL_EVS)
-            break;
-
-        if (CheckPartyHasHadPokerus(mon, 0))
-            multiplier = 2;
-        else
-            multiplier = 1;
-
-        switch (i)
+        for (i = 0; i < NUM_STATS; i++)
         {
-        case STAT_HP:
-            evIncrease = gSpeciesInfo[defeatedSpecies].evYield_HP * multiplier;
-            break;
-        case STAT_ATK:
-            evIncrease = gSpeciesInfo[defeatedSpecies].evYield_Attack * multiplier;
-            break;
-        case STAT_DEF:
-            evIncrease = gSpeciesInfo[defeatedSpecies].evYield_Defense * multiplier;
-            break;
-        case STAT_SPEED:
-            evIncrease = gSpeciesInfo[defeatedSpecies].evYield_Speed * multiplier;
-            break;
-        case STAT_SPATK:
-            evIncrease = gSpeciesInfo[defeatedSpecies].evYield_SpAttack * multiplier;
-            break;
-        case STAT_SPDEF:
-            evIncrease = gSpeciesInfo[defeatedSpecies].evYield_SpDefense * multiplier;
-            break;
+            evs[i] = GetMonData(mon, MON_DATA_HP_EV + i, 0);
+            totalEVs += evs[i];
         }
 
-        heldItem = GetMonData(mon, MON_DATA_HELD_ITEM, 0);
-        if (heldItem == ITEM_ENIGMA_BERRY)
+        for (i = 0; i < NUM_STATS; i++)
         {
-            if (gMain.inBattle)
-                holdEffect = gEnigmaBerries[0].holdEffect;
+            if (totalEVs >= MAX_TOTAL_EVS)
+                break;
+
+            if (CheckPartyHasHadPokerus(mon, 0))
+                multiplier = 2;
             else
-                holdEffect = gSaveBlock1Ptr->enigmaBerry.holdEffect;
+                multiplier = 1;
+
+            switch (i)
+            {
+            case STAT_HP:
+                evIncrease = gSpeciesInfo[defeatedSpecies].evYield_HP * multiplier;
+                break;
+            case STAT_ATK:
+                evIncrease = gSpeciesInfo[defeatedSpecies].evYield_Attack * multiplier;
+                break;
+            case STAT_DEF:
+                evIncrease = gSpeciesInfo[defeatedSpecies].evYield_Defense * multiplier;
+                break;
+            case STAT_SPEED:
+                evIncrease = gSpeciesInfo[defeatedSpecies].evYield_Speed * multiplier;
+                break;
+            case STAT_SPATK:
+                evIncrease = gSpeciesInfo[defeatedSpecies].evYield_SpAttack * multiplier;
+                break;
+            case STAT_SPDEF:
+                evIncrease = gSpeciesInfo[defeatedSpecies].evYield_SpDefense * multiplier;
+                break;
+            }
+
+            heldItem = GetMonData(mon, MON_DATA_HELD_ITEM, 0);
+            if (heldItem == ITEM_ENIGMA_BERRY)
+            {
+                if (gMain.inBattle)
+                    holdEffect = gEnigmaBerries[0].holdEffect;
+                else
+                    holdEffect = gSaveBlock1Ptr->enigmaBerry.holdEffect;
+            }
+            else
+            {
+                holdEffect = GetItemHoldEffect(heldItem);
+            }
+
+            if (holdEffect == HOLD_EFFECT_MACHO_BRACE)
+                evIncrease *= 2;
+
+            if (totalEVs + (s16)evIncrease > MAX_TOTAL_EVS)
+                evIncrease = ((s16)evIncrease + MAX_TOTAL_EVS) - (totalEVs + evIncrease);
+
+            if (evs[i] + (s16)evIncrease > MAX_PER_STAT_EVS)
+            {
+                int val1 = (s16)evIncrease + MAX_PER_STAT_EVS;
+                int val2 = evs[i] + evIncrease;
+                evIncrease = val1 - val2;
+            }
+
+            evs[i] += evIncrease;
+            totalEVs += evIncrease;
+            SetMonData(mon, MON_DATA_HP_EV + i, &evs[i]);
         }
-        else
-        {
-            holdEffect = GetItemHoldEffect(heldItem);
-        }
-
-        if (holdEffect == HOLD_EFFECT_MACHO_BRACE)
-            evIncrease *= 2;
-
-        if (totalEVs + (s16)evIncrease > MAX_TOTAL_EVS)
-            evIncrease = ((s16)evIncrease + MAX_TOTAL_EVS) - (totalEVs + evIncrease);
-
-        if (evs[i] + (s16)evIncrease > MAX_PER_STAT_EVS)
-        {
-            int val1 = (s16)evIncrease + MAX_PER_STAT_EVS;
-            int val2 = evs[i] + evIncrease;
-            evIncrease = val1 - val2;
-        }
-
-        evs[i] += evIncrease;
-        totalEVs += evIncrease;
-        SetMonData(mon, MON_DATA_HP_EV + i, &evs[i]);
     }
 }
 
