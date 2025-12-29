@@ -323,6 +323,13 @@ extern const u8 gText_LevelCapsOff[];
 extern const u8 gText_LevelCapsOn[];
 extern const u8 gText_LevelCapMet[];
 
+// EV birch menu
+extern const u8 gText_BirchEvYes[];
+extern const u8 gText_BirchEvNo[];
+extern const u8 gText_Birch_EvOrNo[];
+extern const u8 gText_Birch_EvYesChosen[];
+extern const u8 gText_Birch_EvNoChosen[];
+
 // Endless Repel
 
 extern const u8 gText_EndlessRepel[];
