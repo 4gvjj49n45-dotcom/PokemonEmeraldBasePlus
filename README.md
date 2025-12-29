@@ -12,7 +12,7 @@ You can make use of the following site to apply the bps patch:
 
 Note: the follwing four items are given to the player immediately after officially getting the starter from Birch.
 
-![alt text](https://github.com/4gvjj49n45-dotcom/pokeemerald/tree/master/readmeImgs/bag.PNG "Each of these can be registered.")
+![alt text](https://raw.githubusercontent.com/4gvjj49n45-dotcom/pokeemerald/master/readmeImgs/bag.PNG "Each of these can be registered.")
 
 ### Portable PC
 No need to run back and forth from pokemon centers to use the PC.
@@ -41,17 +41,21 @@ Follows Gym leaders and Drake's highest leveled Pokemon:
 
 ### EVless mode
 Don't want to have an advantage against enemy Pokemon? Well you can play the game without EVs (choice at the beginning of the game is permanent).
-![alt text](https://github.com/4gvjj49n45-dotcom/pokeemerald/tree/master/readmeImgs/EVchoice.PNG "CHOICE IS PERMANENT".)
+
+![alt text](https://raw.githubusercontent.com/4gvjj49n45-dotcom/pokeemerald/master/readmeImgs/EVchoice.PNG "CHOICE IS PERMANENT".)
 
 You can view which setting you are playing on through the options menu
-![alt text](https://github.com/4gvjj49n45-dotcom/pokeemerald/tree/master/readmeImgs/optionsShowcase.PNG "I really like the look of this".)
+
+![alt text](https://raw.githubusercontent.com/4gvjj49n45-dotcom/pokeemerald/master/readmeImgs/optionsShowcase.PNG "I really like the look of this".)
 
 ### Enhanced summary screen
 Natures are reflected in the summary screen and follows the Gen 5 and on-wards colour scheme (RED = +, BLUE = -).
-https://github.com/4gvjj49n45-dotcom/pokeemerald/tree/master/readmeImgs/statsScreen.PNG
+
+https://raw.githubusercontent.com/4gvjj49n45-dotcom/pokeemerald/master/readmeImgs/statsScreen.PNG
 
 You can also view your Pokemon's IVs by pressing A on the stats screen.
-https://github.com/4gvjj49n45-dotcom/pokeemerald/tree/master/readmeImgs/ivScreen.PNG
+
+https://raw.githubusercontent.com/4gvjj49n45-dotcom/pokeemerald/master/readmeImgs/ivScreen.PNG
 
 ### Quick use items
 You can spam use items on Pokemon. As long as you still have more of the item left in your bag, you will not be kicked out of the party menu screen when using them. Spam candies to your hearts desire!
