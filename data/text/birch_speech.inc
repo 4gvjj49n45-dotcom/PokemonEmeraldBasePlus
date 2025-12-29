@@ -35,6 +35,16 @@ gText_Birch_BoyOrGirl::
 	.string "Are you a boy?\n"
 	.string "Or are you a girl?$"
 
+gText_Birch_EvOrNo::
+	.string "Do you want EVs?\n"
+	.string "You cannot change this later.$"
+
+gText_Birch_EvYesChosen::
+	.string "Playing with EVs.$"
+
+gText_Birch_EvNoChosen::
+	.string "Playing with no EVs.$"
+
 gText_Birch_WhatsYourName::
 	.string "All right.\n"
 	.string "What's your name?$"
