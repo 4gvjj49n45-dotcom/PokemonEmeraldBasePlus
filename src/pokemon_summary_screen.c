@@ -50,7 +50,6 @@
 enum {
     PSS_PAGE_INFO,
     PSS_PAGE_SKILLS,
-    PSS_PAGE_IV, // IV page
     PSS_PAGE_BATTLE_MOVES,
     PSS_PAGE_CONTEST_MOVES,
     PSS_PAGE_COUNT,
@@ -167,7 +166,7 @@ static EWRAM_DATA struct PokemonSummaryScreenData
         u8 OTName[17]; // 0x36
         u32 OTID; // 0x48
 
-        // IV page
+        // IV stuff
         u8 hpIv;
         u8 atkIv;
         u8 defIv;
@@ -196,6 +195,7 @@ static EWRAM_DATA struct PokemonSummaryScreenData
     bool8 handleDeoxys;
     s16 switchCounter; // Used for various switch statement cases that decompress/load graphics or Pokémon data
     u8 unk_filler4[6];
+    bool8 showIVs;
 } *sMonSummaryScreen = NULL;
 EWRAM_DATA u8 gLastViewedMonIndex = 0;
 static EWRAM_DATA u8 sMoveSlotToReplace = 0;
@@ -327,6 +327,9 @@ static void BufferLeftColumnIVs(void); // IV page
 static void PrintLeftColumnIVs(void); // IV page
 static void BufferRightColumnIVs(void); // IV page
 static void PrintRightColumnIVs(void); // IV page
+static void PrintSkillsOrIvPageText(void); // IV page
+static void Task_PrintSkillsOrIvPage(u8 taskId); //IV page
+
 
 // const rom data
 #include "data/text/move_descriptions.h"
@@ -746,8 +749,7 @@ static const u8 sButtons_Gfx[][4 * TILE_SIZE_4BPP] = {
 static void (*const sTextPrinterFunctions[])(void) =
 {
     [PSS_PAGE_INFO] = PrintInfoPageText,
-    [PSS_PAGE_SKILLS] = PrintSkillsPageText,
-    [PSS_PAGE_IV] = PrintIvPageText, // IV page
+    [PSS_PAGE_SKILLS] = PrintSkillsOrIvPageText,   // wrapper
     [PSS_PAGE_BATTLE_MOVES] = PrintBattleMoves,
     [PSS_PAGE_CONTEST_MOVES] = PrintContestMoves
 };
@@ -755,8 +757,7 @@ static void (*const sTextPrinterFunctions[])(void) =
 static const TaskFunc sTextPrinterTasks[] =
 {
     [PSS_PAGE_INFO] = Task_PrintInfoPage,
-    [PSS_PAGE_SKILLS] = Task_PrintSkillsPage,
-    [PSS_PAGE_IV] = Task_PrintIVPage, // IV page
+    [PSS_PAGE_SKILLS] = Task_PrintSkillsOrIvPage,  // wrapper
     [PSS_PAGE_BATTLE_MOVES] = Task_PrintBattleMoves,
     [PSS_PAGE_CONTEST_MOVES] = Task_PrintContestMoves
 };
@@ -1570,7 +1571,8 @@ static void Task_HandleInput(u8 taskId)
         }
         else if ((JOY_NEW(DPAD_LEFT)) || GetLRKeysPressed() == MENU_L_PRESSED)
         {
-            ChangePage(taskId, -1);
+            ChangePage(taskId, -1);     
+
         }
         else if ((JOY_NEW(DPAD_RIGHT)) || GetLRKeysPressed() == MENU_R_PRESSED)
         {
@@ -1580,8 +1582,14 @@ static void Task_HandleInput(u8 taskId)
         {
             if (sMonSummaryScreen->currPageIndex == PSS_PAGE_SKILLS)
             {
-                // go to IV page
-                ChangePage(taskId, +1);
+                PlaySE(SE_SELECT);
+                sMonSummaryScreen->showIVs ^= 1;
+
+                // clear + redraw just like a normal page refresh
+                ClearPageWindowTilemaps(PSS_PAGE_SKILLS);
+                PrintPageSpecificText(PSS_PAGE_SKILLS);
+                PutPageWindowTilemaps(PSS_PAGE_SKILLS);
+                TryDrawExperienceProgressBar();
             }
             else if (sMonSummaryScreen->currPageIndex == PSS_PAGE_INFO)
             {
@@ -2938,12 +2946,6 @@ static void PutPageWindowTilemaps(u8 page)
         PutWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_RIGHT);
         PutWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_EXP);
         break;
-    case PSS_PAGE_IV: // IV page
-        PutWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_TITLE);
-        PutWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_LEFT);
-        PutWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_RIGHT);
-        PutWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_EXP);
-        break;
     case PSS_PAGE_BATTLE_MOVES:
         PutWindowTilemap(PSS_LABEL_WINDOW_BATTLE_MOVES_TITLE);
         if (sMonSummaryScreen->mode == SUMMARY_MODE_SELECT_MOVE)
@@ -2989,11 +2991,6 @@ static void ClearPageWindowTilemaps(u8 page)
         ClearWindowTilemap(PSS_LABEL_WINDOW_POKEMON_INFO_TYPE);
         break;
     case PSS_PAGE_SKILLS:
-        ClearWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_LEFT);
-        ClearWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_RIGHT);
-        ClearWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_EXP);
-        break;
-    case PSS_PAGE_IV:
         ClearWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_LEFT);
         ClearWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_RIGHT);
         ClearWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_EXP);
@@ -3498,6 +3495,24 @@ static void PrintExpPointsNextLevel(void)
     PrintTextOnWindow(windowId, gStringVar1, x, 17, 0, 0);
 }
 
+// Wrapper functions to call stats or IVs
+static void PrintSkillsOrIvPageText(void)
+{
+    if (sMonSummaryScreen->showIVs)
+        PrintIvPageText();
+    else
+        PrintSkillsPageText();
+}
+
+static void Task_PrintSkillsOrIvPage(u8 taskId)
+{
+    if (sMonSummaryScreen->showIVs)
+        Task_PrintIVPage(taskId);
+    else
+        Task_PrintSkillsPage(taskId);
+}
+
+
 // IV page
 static void PrintIvPageText(void) {
 	PrintHeldItemName(); // Copied PrintSkillsPageText; will be using same page structure as PSS_PAGE_SKILLS
@@ -3551,7 +3566,7 @@ static void BufferLeftColumnIVs(void)
     u8 *defIv = Alloc(8);
 
 
-    ConvertIntToDecimalStringN(hpIv, sMonSummaryScreen->summary.hpIv, STR_CONV_MODE_RIGHT_ALIGN, 3);
+    ConvertIntToDecimalStringN(hpIv, sMonSummaryScreen->summary.hpIv, STR_CONV_MODE_RIGHT_ALIGN, 7);
     ConvertIntToDecimalStringN(atkIv, sMonSummaryScreen->summary.atkIv, STR_CONV_MODE_RIGHT_ALIGN, 7);
     ConvertIntToDecimalStringN(defIv, sMonSummaryScreen->summary.defIv, STR_CONV_MODE_RIGHT_ALIGN, 7);
 
