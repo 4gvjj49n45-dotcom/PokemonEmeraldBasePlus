@@ -108,6 +108,12 @@ enum {
 
 #define MOVE_SELECTOR_SPRITES_COUNT 10
 #define TYPE_ICON_SPRITE_COUNT (MAX_MON_MOVES + 1)
+
+// Fields for nature colours
+#define COLORID_NORMAL   1
+#define COLORID_NATURE_UP   4   // "red"
+#define COLORID_NATURE_DOWN 3   // "blue"
+
 // for the spriteIds field in PokemonSummaryScreenData
 enum
 {
@@ -329,6 +335,8 @@ static void BufferRightColumnIVs(void); // IV page
 static void PrintRightColumnIVs(void); // IV page
 static void PrintSkillsOrIvPageText(void); // IV page
 static void Task_PrintSkillsOrIvPage(u8 taskId); //IV page
+static u8 GetNatureStatColorId(u8 nature, u8 natureStatIndex); // Nature colour
+static void PrintSkillsStatLabels_WithNatureColors(void); // Nature colour
 
 
 // const rom data
@@ -1251,6 +1259,7 @@ static bool8 LoadGraphics(void)
         break;
     case 12:
         PrintPageNamesAndStats();
+        PrintSkillsStatLabels_WithNatureColors();
         gMain.state++;
         break;
     case 13:
@@ -1712,6 +1721,7 @@ static void Task_ChangeSummaryMon(u8 taskId)
         break;
     case 10:
         PrintMonInfo();
+        PrintSkillsStatLabels_WithNatureColors();
         break;
     case 11:
         PrintPageSpecificText(sMonSummaryScreen->currPageIndex);
@@ -4328,3 +4338,61 @@ static void KeepMoveSelectorVisible(u8 firstSpriteId)
         gSprites[spriteIds[i]].invisible = FALSE;
     }
 }
+
+static u8 GetNatureStatColorId(u8 nature, u8 natureStatIndex)
+{
+    s8 mod = gNatureStatTable[nature][natureStatIndex];
+    if (mod > 0)
+        return COLORID_NATURE_UP;
+    if (mod < 0)
+        return COLORID_NATURE_DOWN;
+    return COLORID_NORMAL;
+}
+
+static void PrintSkillsStatLabels_WithNatureColors(void)
+{
+    u8 nature = sMonSummaryScreen->summary.nature;
+
+    // Clear the label windows 
+    FillWindowPixelBuffer(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_LEFT, PIXEL_FILL(0));
+    FillWindowPixelBuffer(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_RIGHT, PIXEL_FILL(0));
+
+    // HP label stays normal
+    {
+        int x = 6 + GetStringCenterAlignXOffset(FONT_NORMAL, gText_HP4, 42);
+        PrintTextOnWindow(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_LEFT, gText_HP4, x, 1, 0, COLORID_NORMAL);
+    }
+
+    // Attack / Defense (left window)
+    {
+        u8 atkColor = GetNatureStatColorId(nature, 0); // Attack
+        u8 defColor = GetNatureStatColorId(nature, 1); // Defense
+
+        int x = 6 + GetStringCenterAlignXOffset(FONT_NORMAL, gText_Attack3, 42);
+        PrintTextOnWindow(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_LEFT, gText_Attack3, x, 17, 0, atkColor);
+
+        x = 6 + GetStringCenterAlignXOffset(FONT_NORMAL, gText_Defense3, 42);
+        PrintTextOnWindow(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_LEFT, gText_Defense3, x, 33, 0, defColor);
+    }
+
+    // Sp. Atk / Sp. Def / Speed (right window)
+    {
+        u8 spAtkColor = GetNatureStatColorId(nature, 3); // Sp.Atk
+        u8 spDefColor = GetNatureStatColorId(nature, 4); // Sp.Def
+        u8 spdColor   = GetNatureStatColorId(nature, 2); // Speed
+
+        int x = 2 + GetStringCenterAlignXOffset(FONT_NORMAL, gText_SpAtk4, 36);
+        PrintTextOnWindow(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_RIGHT, gText_SpAtk4, x, 1, 0, spAtkColor);
+
+        x = 2 + GetStringCenterAlignXOffset(FONT_NORMAL, gText_SpDef4, 36);
+        PrintTextOnWindow(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_RIGHT, gText_SpDef4, x, 17, 0, spDefColor);
+
+        x = 2 + GetStringCenterAlignXOffset(FONT_NORMAL, gText_Speed2, 36);
+        PrintTextOnWindow(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_RIGHT, gText_Speed2, x, 33, 0, spdColor);
+    }
+
+    // Push the graphics
+    CopyWindowToVram(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_LEFT, COPYWIN_GFX);
+    CopyWindowToVram(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_RIGHT, COPYWIN_GFX);
+}
+
