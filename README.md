@@ -55,7 +55,7 @@ Natures are reflected in the summary screen and follows the Gen 5 and on-wards c
 
 You can also view your Pokemon's IVs by pressing A on the stats screen.
 
-![IVs]readmeImgs/ivScreen.PNG
+![IVs](readmeImgs/ivScreen.PNG)
 
 ### Quick use items
 You can spam use items on Pokemon. As long as you still have more of the item left in your bag, you will not be kicked out of the party menu screen when using them. Spam candies to your hearts desire!
