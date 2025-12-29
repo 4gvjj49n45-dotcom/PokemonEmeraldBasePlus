@@ -37,6 +37,7 @@
 #include "title_screen.h"
 #include "window.h"
 #include "mystery_gift_menu.h"
+#include "constants/vars.h"   // MAX_TOTAL_EVS
 
 /*
  * Main menu state machine
@@ -244,6 +245,16 @@ static void MainMenu_FormatSavegamePokedex(void);
 static void MainMenu_FormatSavegameTime(void);
 static void MainMenu_FormatSavegameBadges(void);
 static void NewGameBirchSpeech_CreateDialogueWindowBorder(u8, u8, u8, u8, u8, u8);
+
+// EV menu
+static void Task_NewGameBirchSpeech_EvOrNo(u8);
+static void Task_NewGameBirchSpeech_WaitToShowEvMenu(u8);
+static void Task_NewGameBirchSpeech_ChooseEv(u8);
+static void NewGameBirchSpeech_ShowEVMenu(void);
+static s8 NewGameBirchSpeech_ProcessEVMenuInput(void);
+static void NewGameBirchSpeech_ClearEVWindow(u8, u8);
+static void Task_NewGameBirchSpeech_WaitToShowEvSelection(u8);
+static void Task_NewGameBirchSpeech_WaitPressBeforeNameSection(u8);
 
 // .rodata
 
@@ -456,6 +467,12 @@ static const struct MenuAction sMenuActions_Gender[] = {
     {gText_BirchBoy, {NULL}},
     {gText_BirchGirl, {NULL}}
 };
+
+static const struct MenuAction sMenuActions_Ev[] = {
+    {gText_BirchEvYes, {NULL}},
+    {gText_BirchEvNo, {NULL}}
+};
+
 
 static const u8 *const sMalePresetNames[] = {
     gText_DefaultNameStu,
@@ -1509,13 +1526,13 @@ static void Task_NewGameBirchSpeech_ChooseGender(u8 taskId)
             PlaySE(SE_SELECT);
             gSaveBlock2Ptr->playerGender = gender;
             NewGameBirchSpeech_ClearGenderWindow(1, 1);
-            gTasks[taskId].func = Task_NewGameBirchSpeech_WhatsYourName;
+            gTasks[taskId].func = Task_NewGameBirchSpeech_EvOrNo;
             break;
         case FEMALE:
             PlaySE(SE_SELECT);
             gSaveBlock2Ptr->playerGender = gender;
             NewGameBirchSpeech_ClearGenderWindow(1, 1);
-            gTasks[taskId].func = Task_NewGameBirchSpeech_WhatsYourName;
+            gTasks[taskId].func = Task_NewGameBirchSpeech_EvOrNo;
             break;
     }
     gender2 = Menu_GetCursorPos();
@@ -1908,9 +1925,113 @@ static void AddBirchSpeechObjects(u8 taskId)
     gTasks[taskId].tMaySpriteId = maySpriteId;
 }
 
+#undef tPlayerGender
+#define tEVchoice data[6]
+
+// EV menu
+static void Task_NewGameBirchSpeech_EvOrNo(u8 taskId)
+{
+    gTasks[taskId].tEVchoice = 0;
+    NewGameBirchSpeech_ClearWindow(0);
+    NewGameBirchSpeech_ClearGenderWindow(1, 1);
+    StringExpandPlaceholders(gStringVar4, gText_Birch_EvOrNo);
+    AddTextPrinterForMessage(TRUE);
+    gTasks[taskId].func = Task_NewGameBirchSpeech_WaitToShowEvMenu;
+}
+
+static void Task_NewGameBirchSpeech_WaitToShowEvMenu(u8 taskId)
+{
+    if (!RunTextPrintersAndIsPrinter0Active())
+    {
+        NewGameBirchSpeech_ShowEVMenu();
+        gTasks[taskId].func = Task_NewGameBirchSpeech_ChooseEv;
+    }
+}
+
+static void Task_NewGameBirchSpeech_WaitToShowEvSelection(u8 taskId)
+{
+    if (!RunTextPrintersAndIsPrinter0Active())
+    {
+        gTasks[taskId].func = Task_NewGameBirchSpeech_WaitPressBeforeNameSection;
+    }
+}
+
+static void Task_NewGameBirchSpeech_WaitPressBeforeNameSection(u8 taskId)
+{
+    if ((JOY_NEW(A_BUTTON)) || (JOY_NEW(B_BUTTON)))
+    {
+        gTasks[taskId].func = Task_NewGameBirchSpeech_WhatsYourName;
+    }
+}
+
+static void Task_NewGameBirchSpeech_ChooseEv(u8 taskId)
+{
+    int ev = NewGameBirchSpeech_ProcessEVMenuInput();
+    int ev2;
+
+    switch (ev)
+    {
+        case 0:
+            PlaySE(SE_SELECT);
+            gSaveBlock2Ptr->determineEVs = 0;
+            NewGameBirchSpeech_ClearEVWindow(1, 1);
+            NewGameBirchSpeech_ClearWindow(0);
+            StringExpandPlaceholders(gStringVar4, gText_Birch_EvYesChosen);
+            AddTextPrinterForMessage(TRUE);
+            gTasks[taskId].func = Task_NewGameBirchSpeech_WaitToShowEvSelection;
+            break;
+        case 1:
+            PlaySE(SE_SELECT);
+            gSaveBlock2Ptr->determineEVs = 1;
+            NewGameBirchSpeech_ClearEVWindow(1, 1);
+            NewGameBirchSpeech_ClearWindow(0);
+            StringExpandPlaceholders(gStringVar4, gText_Birch_EvNoChosen);
+            AddTextPrinterForMessage(TRUE);
+            gTasks[taskId].func = Task_NewGameBirchSpeech_WaitToShowEvSelection;
+            break;
+    }
+    ev2 = Menu_GetCursorPos();
+    if (ev2 != gTasks[taskId].tEVchoice)
+    {
+        gTasks[taskId].tEVchoice = ev2;
+        gTasks[taskId].func = Task_NewGameBirchSpeech_ChooseEv;
+    }
+}
+
+
+
+static void NewGameBirchSpeech_ShowEVMenu(void)
+{
+    DrawMainMenuWindowBorder(&sNewGameBirchSpeechTextWindows[1], 0xF3);
+    FillWindowPixelBuffer(1, PIXEL_FILL(1));
+    PrintMenuTable(1, ARRAY_COUNT(sMenuActions_Ev), sMenuActions_Ev);
+    InitMenuInUpperLeftCornerNormal(1, ARRAY_COUNT(sMenuActions_Ev), 0);
+    PutWindowTilemap(1);
+    CopyWindowToVram(1, COPYWIN_FULL);
+}
+
+static s8 NewGameBirchSpeech_ProcessEVMenuInput(void)
+{
+    return Menu_ProcessInputNoWrap();
+}
+
+static void NewGameBirchSpeech_ClearEVWindowTilemap(u8 bg, u8 x, u8 y, u8 width, u8 height, u8 unused)
+{
+    FillBgTilemapBufferRect(bg, 0, x + 255, y + 255, width + 2, height + 2, 2);
+}
+
+static void NewGameBirchSpeech_ClearEVWindow(u8 windowId, bool8 copyToVram)
+{
+    CallWindowFunction(windowId, NewGameBirchSpeech_ClearEVWindowTilemap);
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
+    ClearWindowTilemap(windowId);
+    if (copyToVram == TRUE)
+        CopyWindowToVram(windowId, COPYWIN_FULL);
+}
+
 #undef tPlayerSpriteId
 #undef tBG1HOFS
-#undef tPlayerGender
+#undef tEVchoice
 #undef tBirchSpriteId
 #undef tLotadSpriteId
 #undef tBrendanSpriteId
