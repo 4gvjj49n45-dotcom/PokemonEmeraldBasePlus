@@ -637,8 +637,18 @@ static void ButtonMode_DrawChoices(u8 selection)
 
 static void DrawHeaderText(void)
 {
+    if (gSaveBlock2Ptr->determineEVs == 0)
+    {
+        StringCopy(gStringVar1, gText_BirchEvYes);
+    }
+    else
+    {
+        StringCopy(gStringVar1, gText_BirchEvNo);
+    }
+
+    StringExpandPlaceholders(gStringVar4, gText_Option);
     FillWindowPixelBuffer(WIN_HEADER, PIXEL_FILL(1));
-    AddTextPrinterParameterized(WIN_HEADER, FONT_NORMAL, gText_Option, 8, 1, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(WIN_HEADER, FONT_NORMAL, gStringVar4, 8, 1, TEXT_SKIP_DRAW, NULL);
     CopyWindowToVram(WIN_HEADER, COPYWIN_FULL);
 }
 
