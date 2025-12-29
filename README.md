@@ -4,9 +4,18 @@
 ## Installation
 
 This modification was designed with the decompilation of Pokemon Emerald in mind.
+
 This quality of life patch requires the following version of Pokemon Emerald -> `sha1: f3ae088181bf583e55daf962a92bb46f4f1d07b7`
 You can make use of the following site to apply the bps patch:
 * https://www.marcrobledo.com/RomPatcher.js/
+
+## Patch file
+
+Download the PokemonEmeraldBasePlus.bps file and use the aforementioned patcher. Make sure your patch process looks
+like the following:
+
+![PatchScreen](readmeImgs/correctROM.PNG)
+
 
 ## QOL features
 
