@@ -1003,10 +1003,9 @@ LittlerootTown_ProfessorBirchsLab_Text_ScottAboardSSTidalCall:
 
 LittlerootTown_ProfessorBirchsLab_Text_GetPortaPc:
 	.string "By the way, have this!\p"
-	.string "This here is a portable PC.\n"
-	.string "All these nuzlockers are raving\n"
-	.string "about it.\n"
-	.string "Take this medicine, magical\p"
-	.string "candy, and handy dandy\n"
-	.string "infinite repel too.\n.$"
+	.string "This here is a portable PC.\p"
+	.string "All these nuzlockers are raving about it\n"
+	.string "and i don't have any use for the thing.\p"
+	.string "Take this medicine, magical candy, and\n"
+	.string "handy dandy infinite repel too.$"
 
