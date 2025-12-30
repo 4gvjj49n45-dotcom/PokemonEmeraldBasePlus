@@ -1712,11 +1712,13 @@ static bool8 (*const sFishingStateFuncs[])(struct Task *) =
     Fishing_WaitBeforeDots,
     Fishing_InitDots,       // FISHING_START_ROUND
     Fishing_ShowDots,
+    /*
     Fishing_CheckForBite,
     Fishing_GotBite,        // FISHING_GOT_BITE
     Fishing_WaitForA,
     Fishing_CheckMoreDots,
     Fishing_MonOnHook,      // FISHING_ON_HOOK
+    */
     Fishing_StartEncounter,
     Fishing_NotEvenNibble,  // FISHING_NO_BITE
     Fishing_GotAway,        // FISHING_GOT_AWAY
@@ -1848,6 +1850,7 @@ static bool8 Fishing_CheckForBite(struct Task *task)
     {
         task->tStep = FISHING_NO_BITE;
     }
+    /* Commented out the whole check for bite stuff
     else
     {
         if (!GetMonData(&gPlayerParty[0], MON_DATA_SANITY_IS_EGG))
@@ -1871,6 +1874,7 @@ static bool8 Fishing_CheckForBite(struct Task *task)
         if (bite == TRUE)
             StartSpriteAnim(&gSprites[gPlayerAvatar.spriteId], GetFishingBiteDirectionAnimNum(GetPlayerFacingDirection()));
     }
+    */
     return TRUE;
 }
 
