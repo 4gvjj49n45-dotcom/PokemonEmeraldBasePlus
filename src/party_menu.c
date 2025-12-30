@@ -2609,21 +2609,70 @@ static void SetPartyMonSelectionActions(struct Pokemon *mons, u8 slotId, u8 acti
 
 static void SetPartyMonFieldSelectionActions(struct Pokemon *mons, u8 slotId)
 {
-    u8 i, j;
+    u8 i;
+    u16 species;
+    bool32 learn;
 
     sPartyMenuInternal->numActions = 0;
     AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_SUMMARY);
 
     // Add field moves to action list
-    for (i = 0; i < MAX_MON_MOVES; i++)
+
+    species = GetMonData(&mons[slotId], MON_DATA_SPECIES);
+
+    for (i = 0; sFieldMoves[i] != FIELD_MOVES_COUNT; i++)
     {
-        for (j = 0; sFieldMoves[j] != FIELD_MOVES_COUNT; j++)
+        learn = FALSE;
+
+        switch (i) 
         {
-            if (GetMonData(&mons[slotId], i + MON_DATA_MOVE1) == sFieldMoves[j])
-            {
-                AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, j + MENU_FIELD_MOVES);
-                break;
-            }
+            // GF why did you not match the ordering of sFieldMoves to the actual HM order >:(
+        /* Left these cases in case i expand the summary screen to show all possible field moves 
+        but right now i only need to show Fly
+
+        case 0:
+            learn = CanSpeciesLearnTMHM(species, ITEM_HM01 - ITEM_TM01); // Cut
+            break;
+
+        case 1:
+            learn = CanSpeciesLearnTMHM(species, ITEM_HM05 - ITEM_TM01); // Flash
+            break;
+
+        case 2:
+            learn = CanSpeciesLearnTMHM(species, ITEM_HM06 - ITEM_TM01); // Rock Smash
+            break;
+
+        case 3:
+            learn = CanSpeciesLearnTMHM(species, ITEM_HM04 - ITEM_TM01); // Strength
+            break;
+
+        case 4:
+            learn = CanSpeciesLearnTMHM(species, ITEM_HM03 - ITEM_TM01); // Surf
+            break;
+        */
+
+        case 5:
+            learn = CanSpeciesLearnTMHM(species, ITEM_HM02 - ITEM_TM01); // Fly
+            break;
+
+        /*
+        case 6:
+            learn = CanSpeciesLearnTMHM(species, ITEM_HM08 - ITEM_TM01); // Dive
+            break;
+
+        case 7:
+            learn = CanSpeciesLearnTMHM(species, ITEM_HM07 - ITEM_TM01); // Waterfall
+            break;
+        */
+
+        default:
+            learn = FALSE;
+            break;
+        }
+
+        if (learn)
+        {
+            AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, i + MENU_FIELD_MOVES);
         }
     }
 
