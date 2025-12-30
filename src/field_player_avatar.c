@@ -1809,6 +1809,7 @@ static bool8 Fishing_ShowDots(struct Task *task)
 
     AlignFishingAnimationFrames();
     task->tFrameCounter++;
+    /* Prevents game freezes through pressing A early
     if (JOY_NEW(A_BUTTON))
     {
         task->tStep = FISHING_NO_BITE;
@@ -1818,6 +1819,7 @@ static bool8 Fishing_ShowDots(struct Task *task)
     }
     else
     {
+    */
         if (task->tFrameCounter >= 20)
         {
             task->tFrameCounter = 0;
@@ -1835,7 +1837,9 @@ static bool8 Fishing_ShowDots(struct Task *task)
             }
         }
         return FALSE;
+    /*
     }
+    */
 }
 
 static bool8 Fishing_CheckForBite(struct Task *task)
