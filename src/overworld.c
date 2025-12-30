@@ -976,6 +976,11 @@ void SetDefaultFlashLevel(void)
         gSaveBlock1Ptr->flashLevel = 1;
     else
         gSaveBlock1Ptr->flashLevel = gMaxFlashLevel - 1;
+
+    if (FlagGet(FLAG_BADGE02_GET))
+    {
+        gSaveBlock1Ptr->flashLevel = 0;
+    }
 }
 
 void SetFlashLevel(s32 flashLevel)
