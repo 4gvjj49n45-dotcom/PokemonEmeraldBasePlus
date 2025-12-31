@@ -1,5 +1,5 @@
 
-# Pokémon Emerald Base Plus
+# Pokémon Emerald Base Plus v1.1
 
 ## Installation
 
@@ -16,6 +16,11 @@ like the following:
 
 ![PatchScreen](readmeImgs/correctROM.PNG)
 
+# Version 1.1
+The following features have been implemented:
+* Faster fishing (guaranteed encounter after the first round of dots appear on the screen)
+* No HM slaves needed! You can use HMs as field moves freely after earning their respective bage
+* Status condition item - lets you apply any status to your selected mon
 
 ## QOL features
 
