@@ -1,6 +1,8 @@
 
 # Pokémon Emerald Base Plus v1.1
 
+![BoxArt](readmeImgs/Emerald.png)
+
 ## Installation
 
 This modification was designed with the decompilation of Pokemon Emerald in mind.
