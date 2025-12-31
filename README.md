@@ -1,7 +1,7 @@
 
 # Pokémon Emerald Base Plus v1.1
 
-![BoxArt](readmeImgs/Emerald.PNG)
+![BoxArt](readmeImgs/Emerald.png)
 
 ## Installation
 
