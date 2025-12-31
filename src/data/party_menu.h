@@ -690,6 +690,11 @@ struct
     [MENU_FIELD_MOVES + FIELD_MOVE_MILK_DRINK] = {gMoveNames[MOVE_MILK_DRINK], CursorCb_FieldMove},
     [MENU_FIELD_MOVES + FIELD_MOVE_SOFT_BOILED] = {gMoveNames[MOVE_SOFT_BOILED], CursorCb_FieldMove},
     [MENU_FIELD_MOVES + FIELD_MOVE_SWEET_SCENT] = {gMoveNames[MOVE_SWEET_SCENT], CursorCb_FieldMove},
+    [MENU_STATUS_BURN] = {gText_StatusBurn, CursorCb_StatusBurn},
+    [MENU_STATUS_FREEZE] = {gText_StatusFreeze, CursorCb_StatusFreeze},
+    [MENU_STATUS_PARALYZE] = {gText_StatusParalyze, CursorCb_StatusParalyze},
+    [MENU_STATUS_POISON] = {gText_StatusPoison, CursorCb_StatusPoison},
+    [MENU_STATUS_SLEEP] = {gText_StatusSleep, CursorCb_StatusSleep},
 };
 
 static const u8 sPartyMenuAction_SummarySwitchCancel[] = {MENU_SUMMARY, MENU_SWITCH, MENU_CANCEL1};

@@ -1564,6 +1564,14 @@ const u8 gText_BirchEvNo[] = _("NO");
 const u8 gText_EndlessRepel[] = _("Repel wild Pokemon indefinitely.");
 const u8 gText_StopEndlessRepel[] = _("Repellent turned off.");
 
+// Status case
+const u8 gText_StatusBurn[] = _("APPLY BRN");
+const u8 gText_StatusFreeze[] = _("APPLY FRZ");
+const u8 gText_StatusParalyze[] = _("APPLY PAR");
+const u8 gText_StatusPoison[] = _("APPLY PSN");
+const u8 gText_StatusSleep[] = _("APPLY SLP");
+
+
 // Easy chat group names
 const u8 gEasyChatGroupName_Pokemon[] = _("POKéMON");
 const u8 gEasyChatGroupName_Trainer[] = _("TRAINER");
