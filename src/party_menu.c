@@ -501,6 +501,8 @@ static void CursorCb_StatusFreeze(u8);
 static void CursorCb_StatusParalyze(u8);
 static void CursorCb_StatusPoison(u8);
 static void CursorCb_StatusSleep(u8);
+static void Task_WaitStatusAppliedMessage(u8);
+
 
 // Custom features declerations
 static void Task_AfterItemUse_StayIfMore(u8 taskId);
@@ -6556,6 +6558,8 @@ static void Task_AfterItemUse_StayIfMore(u8 taskId)
     gTasks[taskId].func = Task_HandleChooseMonInput;
 }
 
+#define tStatusCaseSlot data[1]
+
 void ItemUseCB_StatusCase(u8 taskId, TaskFunc task)
 {
 
@@ -6566,9 +6570,9 @@ void ItemUseCB_StatusCase(u8 taskId, TaskFunc task)
     AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_STATUS_PARALYZE);
     AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_STATUS_POISON);
     AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_STATUS_SLEEP);
-
-    // Always add a cancel option (use whatever your project uses: MENU_CANCEL1/MENU_CANCEL2/etc.)
     AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_CANCEL1);
+
+    gTasks[taskId].tStatusCaseSlot = gPartyMenu.slotId;
 
     DisplaySelectionWindow(SELECTWINDOW_ACTIONS);
     gTasks[taskId].data[0] = 0xFF;
@@ -6578,12 +6582,99 @@ void ItemUseCB_StatusCase(u8 taskId, TaskFunc task)
 
 static void CursorCb_StatusBurn(u8 taskId)
 {
-    // apply status (later)
-    // then return to party menu / close selection window the same way other callbacks do
+    u8 slot = gTasks[taskId].tStatusCaseSlot;
+    struct Pokemon *mon = &gPlayerParty[slot];
+    u32 status = STATUS1_BURN;
+
+    // Close the action window
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[SELECTWINDOW_ACTIONS]);
+
+    SetMonData(mon, MON_DATA_STATUS, &status);
+    StringExpandPlaceholders(gStringVar4, gText_StatusApplied);
+    DisplayPartyMenuMessage(gStringVar4, TRUE);
+
+    // Switch to a "wait" task
+    gTasks[taskId].func = Task_WaitStatusAppliedMessage;
 }
 
-static void CursorCb_StatusFreeze(u8 taskId) { }
-static void CursorCb_StatusParalyze(u8 taskId) { }
-static void CursorCb_StatusPoison(u8 taskId) { }
-static void CursorCb_StatusSleep(u8 taskId) { }
+static void CursorCb_StatusFreeze(u8 taskId) 
+{
+    u8 slot = gTasks[taskId].tStatusCaseSlot;
+    struct Pokemon *mon = &gPlayerParty[slot];
+    u32 status = STATUS1_FREEZE;
+
+    // Close the action window
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[SELECTWINDOW_ACTIONS]);
+
+    SetMonData(mon, MON_DATA_STATUS, &status);
+    StringExpandPlaceholders(gStringVar4, gText_StatusApplied);
+    DisplayPartyMenuMessage(gStringVar4, TRUE);
+
+    // Switch to a "wait" task
+    gTasks[taskId].func = Task_WaitStatusAppliedMessage;
+}
+
+static void CursorCb_StatusParalyze(u8 taskId) 
+{
+    u8 slot = gTasks[taskId].tStatusCaseSlot;
+    struct Pokemon *mon = &gPlayerParty[slot];
+    u32 status = STATUS1_PARALYSIS;
+
+    // Close the action window
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[SELECTWINDOW_ACTIONS]);
+
+    SetMonData(mon, MON_DATA_STATUS, &status);
+    StringExpandPlaceholders(gStringVar4, gText_StatusApplied);
+    DisplayPartyMenuMessage(gStringVar4, TRUE);
+
+    // Switch to a "wait" task
+    gTasks[taskId].func = Task_WaitStatusAppliedMessage;
+}
+
+static void CursorCb_StatusPoison(u8 taskId) 
+{
+    u8 slot = gTasks[taskId].tStatusCaseSlot;
+    struct Pokemon *mon = &gPlayerParty[slot];
+    u32 status = STATUS1_POISON;
+
+    // Close the action window
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[SELECTWINDOW_ACTIONS]);
+
+    SetMonData(mon, MON_DATA_STATUS, &status);
+    StringExpandPlaceholders(gStringVar4, gText_StatusApplied);
+    DisplayPartyMenuMessage(gStringVar4, TRUE);
+
+    // Switch to a "wait" task
+    gTasks[taskId].func = Task_WaitStatusAppliedMessage;
+}
+
+static void CursorCb_StatusSleep(u8 taskId) 
+{
+    u8 slot = gTasks[taskId].tStatusCaseSlot;
+    struct Pokemon *mon = &gPlayerParty[slot];
+    u32 status = STATUS1_SLEEP;
+
+    // Close the action window
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[SELECTWINDOW_ACTIONS]);
+
+    SetMonData(mon, MON_DATA_STATUS, &status);
+    StringExpandPlaceholders(gStringVar4, gText_StatusApplied);
+    DisplayPartyMenuMessage(gStringVar4, TRUE);
+
+    // Switch to a "wait" task
+    gTasks[taskId].func = Task_WaitStatusAppliedMessage;
+}
+
+static void Task_WaitStatusAppliedMessage(u8 taskId)
+{
+    // Wait until the party menu text printer is done
+    if (!IsPartyMenuTextPrinterActive())
+    {
+        // Reset action list
+        sPartyMenuInternal->numActions = 0;
+
+        // Return to party menu flow
+        gTasks[taskId].func = Task_ReturnToChooseMonAfterText;
+    }
+}
 
