@@ -145,6 +145,20 @@ enum {
     TAG_STATUS_ICONS,
 };
 
+
+// After the existing MENU_* enum ends:
+#define MENU_STATUS_BASE (MENU_FIELD_MOVES + FIELD_MOVES_COUNT)
+
+enum
+{
+    MENU_STATUS_BURN = MENU_STATUS_BASE,
+    MENU_STATUS_FREEZE,
+    MENU_STATUS_PARALYZE,
+    MENU_STATUS_POISON,
+    MENU_STATUS_SLEEP,
+    MENU_STATUS_COUNT
+};
+
 #define TAG_HELD_ITEM 55120
 
 #define PARTY_PAL_SELECTED     (1 << 0)
@@ -480,6 +494,13 @@ static bool8 SetUpFieldMove_Surf(void);
 static bool8 SetUpFieldMove_Fly(void);
 static bool8 SetUpFieldMove_Waterfall(void);
 static bool8 SetUpFieldMove_Dive(void);
+
+// Status case
+static void CursorCb_StatusBurn(u8);
+static void CursorCb_StatusFreeze(u8);
+static void CursorCb_StatusParalyze(u8);
+static void CursorCb_StatusPoison(u8);
+static void CursorCb_StatusSleep(u8);
 
 // Custom features declerations
 static void Task_AfterItemUse_StayIfMore(u8 taskId);
@@ -6534,4 +6555,35 @@ static void Task_AfterItemUse_StayIfMore(u8 taskId)
     }
     gTasks[taskId].func = Task_HandleChooseMonInput;
 }
+
+void ItemUseCB_StatusCase(u8 taskId, TaskFunc task)
+{
+
+    sPartyMenuInternal->numActions = 0;
+
+    AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_STATUS_BURN);
+    AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_STATUS_FREEZE);
+    AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_STATUS_PARALYZE);
+    AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_STATUS_POISON);
+    AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_STATUS_SLEEP);
+
+    // Always add a cancel option (use whatever your project uses: MENU_CANCEL1/MENU_CANCEL2/etc.)
+    AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_CANCEL1);
+
+    DisplaySelectionWindow(SELECTWINDOW_ACTIONS);
+    gTasks[taskId].data[0] = 0xFF;
+    gTasks[taskId].func = Task_HandleSelectionMenuInput;
+
+}
+
+static void CursorCb_StatusBurn(u8 taskId)
+{
+    // apply status (later)
+    // then return to party menu / close selection window the same way other callbacks do
+}
+
+static void CursorCb_StatusFreeze(u8 taskId) { }
+static void CursorCb_StatusParalyze(u8 taskId) { }
+static void CursorCb_StatusPoison(u8 taskId) { }
+static void CursorCb_StatusSleep(u8 taskId) { }
 
