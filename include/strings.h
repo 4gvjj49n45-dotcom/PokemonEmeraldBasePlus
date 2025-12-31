@@ -343,6 +343,8 @@ extern const u8 gText_StatusParalyze[];
 extern const u8 gText_StatusPoison[];
 extern const u8 gText_StatusSleep[];
 
+extern const u8 gText_StatusApplied[];
+
 extern const u8 gText_MaleSymbol[];
 extern const u8 gText_FemaleSymbol[];
 

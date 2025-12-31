@@ -1570,6 +1570,7 @@ const u8 gText_StatusFreeze[] = _("APPLY FRZ");
 const u8 gText_StatusParalyze[] = _("APPLY PAR");
 const u8 gText_StatusPoison[] = _("APPLY PSN");
 const u8 gText_StatusSleep[] = _("APPLY SLP");
+const u8 gText_StatusApplied[] = _("APPLIED STATUS TO THE CHOSEN MON");
 
 
 // Easy chat group names
