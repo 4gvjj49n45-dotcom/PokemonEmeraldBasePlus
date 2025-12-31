@@ -1210,6 +1210,11 @@ static void ItemUseOnFieldCB_EndlessRepel(u8 taskId)
     DestroyTask(taskId);
 }
 
+void ItemUseOutOfBattle_StatusCase(u8 taskId)
+{
+    gItemUseCB = ItemUseCB_StatusCase;
+    SetUpItemUseCallback(taskId);
+}
 
 
 

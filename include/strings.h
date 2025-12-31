@@ -335,6 +335,14 @@ extern const u8 gText_Birch_EvNoChosen[];
 extern const u8 gText_EndlessRepel[];
 extern const u8 gText_StopEndlessRepel[];
 
+// Status case
+
+extern const u8 gText_StatusBurn[];
+extern const u8 gText_StatusFreeze[];
+extern const u8 gText_StatusParalyze[];
+extern const u8 gText_StatusPoison[];
+extern const u8 gText_StatusSleep[];
+
 extern const u8 gText_MaleSymbol[];
 extern const u8 gText_FemaleSymbol[];
 

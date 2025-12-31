@@ -4591,6 +4591,19 @@ const struct Item gItems[] =
         .fieldUseFunc = ItemUseOutOfBattle_EndlessRepel,
     },
 
+    [ITEM_STATUS_CASE] =
+    {
+        .name = _("STATUS CASE"),
+        .itemId = ITEM_STATUS_CASE,
+        .price = 0,
+        .description = sStatusCaseDesc,
+        .importance = 1,
+        .registrability = TRUE,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_StatusCase,
+    },
+
 };
 
 

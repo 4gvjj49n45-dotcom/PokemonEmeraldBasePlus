@@ -1567,3 +1567,7 @@ static const u8 sEndlessCandyDesc[] = _(
 static const u8 sEndlessRepelDesc[] = _(
     "Repels wild \n"
     "Pokemon endlessly.");
+
+static const u8 sStatusCaseDesc[] = _(
+    "Apply status \n"
+    "conditions to PKMN.");
