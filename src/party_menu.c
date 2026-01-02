@@ -4852,7 +4852,8 @@ static void Task_LearnedMove(u8 taskId)
     {
         AdjustFriendship(mon, FRIENDSHIP_EVENT_LEARN_TMHM);
         if (item < ITEM_HM01)
-            RemoveBagItem(item, 1);
+            if (gSaveBlock2Ptr->determineTMs == 0)
+                RemoveBagItem(item, 1);
     }
     GetMonNickname(mon, gStringVar1);
     StringCopy(gStringVar2, gMoveNames[move[0]]);
