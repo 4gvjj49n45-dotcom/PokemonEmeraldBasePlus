@@ -93,10 +93,14 @@ static void Task_TryFieldPoisonWhiteOut(u8 taskId)
             if (CurrentBattlePyramidLocation() || InBattlePike() || InTrainerHillChallenge())
 #else
             if (CurrentBattlePyramidLocation() | InBattlePike() || InTrainerHillChallenge())
+            {
 #endif
                 gSpecialVar_Result = FLDPSN_FRONTIER_WHITEOUT;
+                FlagClear(FLAG_ALLOW_ITEMS);
+            }
             else
                 gSpecialVar_Result = FLDPSN_WHITEOUT;
+                FlagClear(FLAG_ALLOW_ITEMS);
         }
         else
         {
