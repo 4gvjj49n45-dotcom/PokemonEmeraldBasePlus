@@ -72,6 +72,7 @@
 #include "constants/party_menu.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
+#include "constants/abilities.h"
 
 enum {
     MENU_SUMMARY,
@@ -6585,12 +6586,23 @@ static void CursorCb_StatusBurn(u8 taskId)
     u8 slot = gTasks[taskId].tStatusCaseSlot;
     struct Pokemon *mon = &gPlayerParty[slot];
     u32 status = STATUS1_BURN;
+    u16 species = GetMonData(mon, MON_DATA_SPECIES);
+    u8 type1 = gSpeciesInfo[species].types[0];
+    u8 type2 = gSpeciesInfo[species].types[1];
 
     // Close the action window
     PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[SELECTWINDOW_ACTIONS]);
 
-    SetMonData(mon, MON_DATA_STATUS, &status);
-    StringExpandPlaceholders(gStringVar4, gText_StatusApplied);
+    if (type1 == TYPE_FIRE || type2 == TYPE_FIRE)
+    {
+        StringExpandPlaceholders(gStringVar4, gText_StatusBurnNo);
+    }
+    else
+    {
+        SetMonData(mon, MON_DATA_STATUS, &status);
+        StringExpandPlaceholders(gStringVar4, gText_StatusApplied);
+    }
+
     DisplayPartyMenuMessage(gStringVar4, TRUE);
 
     // Switch to a "wait" task
@@ -6602,12 +6614,23 @@ static void CursorCb_StatusFreeze(u8 taskId)
     u8 slot = gTasks[taskId].tStatusCaseSlot;
     struct Pokemon *mon = &gPlayerParty[slot];
     u32 status = STATUS1_FREEZE;
+    u16 species = GetMonData(mon, MON_DATA_SPECIES);
+    u8 type1 = gSpeciesInfo[species].types[0];
+    u8 type2 = gSpeciesInfo[species].types[1];
 
     // Close the action window
     PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[SELECTWINDOW_ACTIONS]);
 
-    SetMonData(mon, MON_DATA_STATUS, &status);
-    StringExpandPlaceholders(gStringVar4, gText_StatusApplied);
+    if (type1 == TYPE_ICE || type2 == TYPE_ICE)
+    {
+        StringExpandPlaceholders(gStringVar4, gText_StatusIceNo);
+    }
+    else
+    {
+        SetMonData(mon, MON_DATA_STATUS, &status);
+        StringExpandPlaceholders(gStringVar4, gText_StatusApplied);
+    }
+
     DisplayPartyMenuMessage(gStringVar4, TRUE);
 
     // Switch to a "wait" task
@@ -6636,34 +6659,53 @@ static void CursorCb_StatusPoison(u8 taskId)
     u8 slot = gTasks[taskId].tStatusCaseSlot;
     struct Pokemon *mon = &gPlayerParty[slot];
     u32 status = STATUS1_POISON;
+    u16 species = GetMonData(mon, MON_DATA_SPECIES);
+    u8 type1 = gSpeciesInfo[species].types[0];
+    u8 type2 = gSpeciesInfo[species].types[1];
 
     // Close the action window
     PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[SELECTWINDOW_ACTIONS]);
 
-    SetMonData(mon, MON_DATA_STATUS, &status);
-    StringExpandPlaceholders(gStringVar4, gText_StatusApplied);
+    if (type1 == TYPE_POISON || type2 == TYPE_POISON)
+    {
+        StringExpandPlaceholders(gStringVar4, gText_StatusPoisonNo);
+    }
+    else
+    {
+        SetMonData(mon, MON_DATA_STATUS, &status);
+        StringExpandPlaceholders(gStringVar4, gText_StatusApplied);
+    }
+
     DisplayPartyMenuMessage(gStringVar4, TRUE);
 
     // Switch to a "wait" task
     gTasks[taskId].func = Task_WaitStatusAppliedMessage;
 }
 
-static void CursorCb_StatusSleep(u8 taskId) 
+static void CursorCb_StatusSleep(u8 taskId)
 {
     u8 slot = gTasks[taskId].tStatusCaseSlot;
     struct Pokemon *mon = &gPlayerParty[slot];
     u32 status = STATUS1_SLEEP;
+    u8 ability = GetMonAbility(&gPlayerParty[slot]);
 
     // Close the action window
     PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[SELECTWINDOW_ACTIONS]);
 
-    SetMonData(mon, MON_DATA_STATUS, &status);
-    StringExpandPlaceholders(gStringVar4, gText_StatusApplied);
-    DisplayPartyMenuMessage(gStringVar4, TRUE);
+    if (ability == ABILITY_INSOMNIA || ability == ABILITY_VITAL_SPIRIT)
+    {
+        StringExpandPlaceholders(gStringVar4, gText_StatusSleepNo);
+    }
+    else
+    {
+        SetMonData(mon, MON_DATA_STATUS, &status);
+        StringExpandPlaceholders(gStringVar4, gText_StatusApplied);
+    }
 
-    // Switch to a "wait" task
+    DisplayPartyMenuMessage(gStringVar4, TRUE);
     gTasks[taskId].func = Task_WaitStatusAppliedMessage;
 }
+
 
 static void Task_WaitStatusAppliedMessage(u8 taskId)
 {
