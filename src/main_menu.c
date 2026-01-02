@@ -256,6 +256,16 @@ static void NewGameBirchSpeech_ClearEVWindow(u8, u8);
 static void Task_NewGameBirchSpeech_WaitToShowEvSelection(u8);
 static void Task_NewGameBirchSpeech_WaitPressBeforeNameSection(u8);
 
+// TM menu
+static void Task_NewGameBirchSpeech_TmOrNo(u8);
+static void Task_NewGameBirchSpeech_WaitToShowTmMenu(u8);
+static void Task_NewGameBirchSpeech_ChooseTm(u8);
+static void NewGameBirchSpeech_ShowTMMenu(void);
+static s8 NewGameBirchSpeech_ProcessTMMenuInput(void);
+static void NewGameBirchSpeech_ClearTMWindow(u8, u8);
+static void Task_NewGameBirchSpeech_WaitToShowTmSelection(u8);
+static void Task_NewGameBirchSpeech_WaitPressBeforeNewNameSection(u8);
+
 // .rodata
 
 static const u16 sBirchSpeechBgPals[][16] = {
@@ -471,6 +481,11 @@ static const struct MenuAction sMenuActions_Gender[] = {
 static const struct MenuAction sMenuActions_Ev[] = {
     {gText_BirchEvYes, {NULL}},
     {gText_BirchEvNo, {NULL}}
+};
+
+static const struct MenuAction sMenuActions_Tm[] = {
+    {gText_BirchTmYes, {NULL}},
+    {gText_BirchTmNo, {NULL}}
 };
 
 
@@ -1960,7 +1975,7 @@ static void Task_NewGameBirchSpeech_WaitPressBeforeNameSection(u8 taskId)
 {
     if ((JOY_NEW(A_BUTTON)) || (JOY_NEW(B_BUTTON)))
     {
-        gTasks[taskId].func = Task_NewGameBirchSpeech_WhatsYourName;
+        gTasks[taskId].func = Task_NewGameBirchSpeech_TmOrNo;
     }
 }
 
@@ -2029,9 +2044,113 @@ static void NewGameBirchSpeech_ClearEVWindow(u8 windowId, bool8 copyToVram)
         CopyWindowToVram(windowId, COPYWIN_FULL);
 }
 
+#undef tEVchoice
+#define tTMchoice data[6]
+
+// EV menu
+static void Task_NewGameBirchSpeech_TmOrNo(u8 taskId)
+{
+    gTasks[taskId].tTMchoice = 0;
+    NewGameBirchSpeech_ClearWindow(0);
+    NewGameBirchSpeech_ClearGenderWindow(1, 1);
+    StringExpandPlaceholders(gStringVar4, gText_Birch_TmOrNo);
+    AddTextPrinterForMessage(TRUE);
+    gTasks[taskId].func = Task_NewGameBirchSpeech_WaitToShowTmMenu;
+}
+
+static void Task_NewGameBirchSpeech_WaitToShowTmMenu(u8 taskId)
+{
+    if (!RunTextPrintersAndIsPrinter0Active())
+    {
+        NewGameBirchSpeech_ShowTMMenu();
+        gTasks[taskId].func = Task_NewGameBirchSpeech_ChooseTm;
+    }
+}
+
+static void Task_NewGameBirchSpeech_WaitToShowTmSelection(u8 taskId)
+{
+    if (!RunTextPrintersAndIsPrinter0Active())
+    {
+        gTasks[taskId].func = Task_NewGameBirchSpeech_WaitPressBeforeNewNameSection;
+    }
+}
+
+static void Task_NewGameBirchSpeech_WaitPressBeforeNewNameSection(u8 taskId)
+{
+    if ((JOY_NEW(A_BUTTON)) || (JOY_NEW(B_BUTTON)))
+    {
+        gTasks[taskId].func = Task_NewGameBirchSpeech_WhatsYourName;
+    }
+}
+
+static void Task_NewGameBirchSpeech_ChooseTm(u8 taskId)
+{
+    int tm = NewGameBirchSpeech_ProcessTMMenuInput();
+    int tm2;
+
+    switch (tm)
+    {
+        case 0:
+            PlaySE(SE_SELECT);
+            gSaveBlock2Ptr->determineTMs = 1;
+            NewGameBirchSpeech_ClearEVWindow(1, 1);
+            NewGameBirchSpeech_ClearWindow(0);
+            StringExpandPlaceholders(gStringVar4, gText_Birch_TmYesChosen);
+            AddTextPrinterForMessage(TRUE);
+            gTasks[taskId].func = Task_NewGameBirchSpeech_WaitToShowTmSelection;
+            break;
+        case 1:
+            PlaySE(SE_SELECT);
+            gSaveBlock2Ptr->determineTMs = 0;
+            NewGameBirchSpeech_ClearEVWindow(1, 1);
+            NewGameBirchSpeech_ClearWindow(0);
+            StringExpandPlaceholders(gStringVar4, gText_Birch_TmNoChosen);
+            AddTextPrinterForMessage(TRUE);
+            gTasks[taskId].func = Task_NewGameBirchSpeech_WaitToShowTmSelection;
+            break;
+    }
+    tm2 = Menu_GetCursorPos();
+    if (tm2 != gTasks[taskId].tTMchoice)
+    {
+        gTasks[taskId].tTMchoice = tm2;
+        gTasks[taskId].func = Task_NewGameBirchSpeech_ChooseTm;
+    }
+}
+
+
+
+static void NewGameBirchSpeech_ShowTMMenu(void)
+{
+    DrawMainMenuWindowBorder(&sNewGameBirchSpeechTextWindows[1], 0xF3);
+    FillWindowPixelBuffer(1, PIXEL_FILL(1));
+    PrintMenuTable(1, ARRAY_COUNT(sMenuActions_Tm), sMenuActions_Tm);
+    InitMenuInUpperLeftCornerNormal(1, ARRAY_COUNT(sMenuActions_Tm), 0);
+    PutWindowTilemap(1);
+    CopyWindowToVram(1, COPYWIN_FULL);
+}
+
+static s8 NewGameBirchSpeech_ProcessTMMenuInput(void)
+{
+    return Menu_ProcessInputNoWrap();
+}
+
+static void NewGameBirchSpeech_ClearTMWindowTilemap(u8 bg, u8 x, u8 y, u8 width, u8 height, u8 unused)
+{
+    FillBgTilemapBufferRect(bg, 0, x + 255, y + 255, width + 2, height + 2, 2);
+}
+
+static void NewGameBirchSpeech_ClearTMWindow(u8 windowId, bool8 copyToVram)
+{
+    CallWindowFunction(windowId, NewGameBirchSpeech_ClearTMWindowTilemap);
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
+    ClearWindowTilemap(windowId);
+    if (copyToVram == TRUE)
+        CopyWindowToVram(windowId, COPYWIN_FULL);
+}
+
 #undef tPlayerSpriteId
 #undef tBG1HOFS
-#undef tEVchoice
+#undef tTMchoice
 #undef tBirchSpriteId
 #undef tLotadSpriteId
 #undef tBrendanSpriteId
