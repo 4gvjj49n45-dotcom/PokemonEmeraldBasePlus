@@ -1554,7 +1554,7 @@ const u8 gText_TakeGoodCareOfX[] = _("Take good care of {STR_VAR_3}!");
 const u8 gText_LevelCaps[] = _("Level Cap: {STR_VAR_1}");
 const u8 gText_LevelCapsOff[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}OFF");
 const u8 gText_LevelCapsOn[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}ON");
-const u8 gText_LevelCapMet[] = _("Cannot use endless candies\n to exceed level cap.");
+const u8 gText_LevelCapMet[] = _("Cannot use endless candies\nto exceed level cap.");
 
 // EV birch menu
 const u8 gText_BirchEvYes[] = _("YES");
@@ -1570,7 +1570,11 @@ const u8 gText_StatusFreeze[] = _("APPLY FRZ");
 const u8 gText_StatusParalyze[] = _("APPLY PAR");
 const u8 gText_StatusPoison[] = _("APPLY PSN");
 const u8 gText_StatusSleep[] = _("APPLY SLP");
-const u8 gText_StatusApplied[] = _("APPLIED STATUS TO THE CHOSEN MON");
+const u8 gText_StatusApplied[] = _("APPLIED STATUS TO THE CHOSEN MON\p");
+
+// Item use
+const u8 gText_NotFair[] = _("Cannot use item here. \nWouldn't be fair.\p");
+
 
 
 // Easy chat group names

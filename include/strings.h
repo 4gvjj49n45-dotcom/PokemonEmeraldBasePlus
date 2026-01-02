@@ -345,6 +345,9 @@ extern const u8 gText_StatusSleep[];
 
 extern const u8 gText_StatusApplied[];
 
+// Item use
+extern const u8 gText_NotFair[];
+
 extern const u8 gText_MaleSymbol[];
 extern const u8 gText_FemaleSymbol[];
 

@@ -45,6 +45,7 @@ EverGrandeCity_ChampionsRoom_EventScript_Wallace::
 	end
 
 EverGrandeCity_ChampionsRoom_EventScript_Defeated::
+	clearflag FLAG_ALLOW_ITEMS
 	playse SE_DOOR
 	setmetatile 6, 1, METATILE_EliteFour_OpenDoorChampion_Frame, FALSE
 	setmetatile 6, 2, METATILE_EliteFour_OpenDoorChampion_Opening, FALSE

@@ -37,6 +37,7 @@ EverGrandeCity_SidneysRoom_OnFrame:
 
 EverGrandeCity_SidneysRoom_EventScript_WalkInCloseDoor::
 	lockall
+	setflag FLAG_ALLOW_ITEMS
 	call PokemonLeague_EliteFour_EventScript_WalkInCloseDoor
 	setvar VAR_ELITE_4_STATE, 1
 	releaseall
