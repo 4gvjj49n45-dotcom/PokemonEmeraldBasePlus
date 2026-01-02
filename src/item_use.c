@@ -169,6 +169,30 @@ static void DisplayCannotDismountBikeMessage(u8 taskId, bool8 isUsingRegisteredK
     DisplayCannotUseItemMessage(taskId, isUsingRegisteredKeyItemOnField, gText_CantDismountBike);
 }
 
+// Custom text for item use
+
+static void DisplayCannotUseItemMessageNotFair(u8 taskId, bool8 isUsingRegisteredKeyItemOnField, const u8 *str)
+{
+    StringExpandPlaceholders(gStringVar4, str);
+    if (!isUsingRegisteredKeyItemOnField)
+    {
+        if (CurrentBattlePyramidLocation() == PYRAMID_LOCATION_NONE)
+            DisplayItemMessage(taskId, FONT_NORMAL, gStringVar4, CloseItemMessage);
+        else
+            DisplayItemMessageInBattlePyramid(taskId, gText_NotFair, Task_CloseBattlePyramidBagMessage);
+    }
+    else
+    {
+        DisplayItemMessageOnField(taskId, gStringVar4, Task_CloseCantUseKeyItemMessage);
+    }
+}
+
+static void DisplayCannotUseItemNotFair(u8 taskId, bool8 isUsingRegisteredKeyItemOnField)
+{
+    DisplayCannotUseItemMessageNotFair(taskId, isUsingRegisteredKeyItemOnField, gText_NotFair);
+}
+
+
 static void Task_CloseCantUseKeyItemMessage(u8 taskId)
 {
     ClearDialogWindowAndFrame(0, TRUE);
@@ -1143,6 +1167,13 @@ void ItemUseOutOfBattle_CannotUse(u8 taskId)
 // Custom items
 void ItemUseOutOfBattle_PortaPc(u8 taskId)
 {
+    // Prevents use during E4
+    if(FlagGet(FLAG_ALLOW_ITEMS))
+    {
+        DisplayCannotUseItemNotFair(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+        return;
+    }
+
     // Optional: prevent in link / special states, match other key items if needed
     if (MenuHelpers_IsLinkActive() == TRUE)
     {
@@ -1164,6 +1195,13 @@ static void ItemUseOnFieldCB_PortaPc(u8 taskId)
 
 void ItemUseOutOfBattle_PocketMedicine(u8 taskId)
 {
+    // Prevents use during E4
+    if(FlagGet(FLAG_ALLOW_ITEMS))
+    {
+        DisplayCannotUseItemNotFair(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+        return;
+    }
+
     // Optional: prevent in link / special states, match other key items if needed
     if (MenuHelpers_IsLinkActive() == TRUE)
     {
@@ -1212,9 +1250,17 @@ static void ItemUseOnFieldCB_EndlessRepel(u8 taskId)
 
 void ItemUseOutOfBattle_StatusCase(u8 taskId)
 {
+    // Prevents use during E4
+    if(FlagGet(FLAG_ALLOW_ITEMS))
+    {
+        DisplayCannotUseItemNotFair(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+        return;
+    }
+
     gItemUseCB = ItemUseCB_StatusCase;
     SetUpItemUseCallback(taskId);
 }
+
 
 
 
