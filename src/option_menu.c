@@ -646,6 +646,15 @@ static void DrawHeaderText(void)
         StringCopy(gStringVar1, gText_BirchEvNo);
     }
 
+    if (gSaveBlock2Ptr->determineTMs == 1)
+    {
+        StringCopy(gStringVar2, gText_BirchTmYes);
+    }
+    else
+    {
+        StringCopy(gStringVar2, gText_BirchTmNo);
+    }
+
     StringExpandPlaceholders(gStringVar4, gText_Option);
     FillWindowPixelBuffer(WIN_HEADER, PIXEL_FILL(1));
     AddTextPrinterParameterized(WIN_HEADER, FONT_NORMAL, gStringVar4, 8, 1, TEXT_SKIP_DRAW, NULL);
