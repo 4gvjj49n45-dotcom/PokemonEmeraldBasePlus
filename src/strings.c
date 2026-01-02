@@ -1571,6 +1571,10 @@ const u8 gText_StatusParalyze[] = _("APPLY PAR");
 const u8 gText_StatusPoison[] = _("APPLY PSN");
 const u8 gText_StatusSleep[] = _("APPLY SLP");
 const u8 gText_StatusApplied[] = _("APPLIED STATUS TO THE CHOSEN MON\p");
+const u8 gText_StatusBurnNo[] = _("CANNOT BURN A FIRE TYPE MON\p");
+const u8 gText_StatusIceNo[] = _("CANNOT FREEZE AN ICE TYPE MON\p");
+const u8 gText_StatusPoisonNo[] = _("CANNOT POISON A POISON TYPE MON\p");
+const u8 gText_StatusSleepNo[] = _("ABILITY PREVENTS SLEEP STATUS\p");
 
 // Item use
 const u8 gText_NotFair[] = _("Cannot use item here. \nWouldn't be fair.\p");

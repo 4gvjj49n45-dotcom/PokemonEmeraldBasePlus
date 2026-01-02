@@ -344,6 +344,10 @@ extern const u8 gText_StatusPoison[];
 extern const u8 gText_StatusSleep[];
 
 extern const u8 gText_StatusApplied[];
+extern const u8 gText_StatusBurnNo[];
+extern const u8 gText_StatusIceNo[];
+extern const u8 gText_StatusPoisonNo[];
+extern const u8 gText_StatusSleepNo[];
 
 // Item use
 extern const u8 gText_NotFair[];
