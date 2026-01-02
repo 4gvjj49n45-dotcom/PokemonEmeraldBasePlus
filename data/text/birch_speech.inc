@@ -45,6 +45,16 @@ gText_Birch_EvYesChosen::
 gText_Birch_EvNoChosen::
 	.string "Playing with no EVs.$"
 
+gText_Birch_TmOrNo::
+	.string "Do you want infinite TMs?\n"
+	.string "You cannot change this later.$"
+
+gText_Birch_TmYesChosen::
+	.string "Playing with infinite TMs.$"
+
+gText_Birch_TmNoChosen::
+	.string "Playing with standard TMs.$"
+
 gText_Birch_WhatsYourName::
 	.string "All right.\n"
 	.string "What's your name?$"
