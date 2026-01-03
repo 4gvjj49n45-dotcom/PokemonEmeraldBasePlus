@@ -88,4 +88,4 @@ Fishing now guarantees an encounter and only has 1 sequence of dots appear befor
 
 ### Patch guy NPC
 Interacting with this NPC (in prof. Birch's lab) ensures your key items match what the patch expects. He also let's you set your EV, TM, and berry mode.
-
+![PatchGuy](readmeImgs/patchGuy.PNG)
