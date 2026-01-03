@@ -24,6 +24,7 @@ static u8 CalcBerryYield(struct BerryTree *tree);
 static u8 GetBerryCountByBerryTreeId(u8 id);
 static u16 GetStageDurationByBerryType(u8);
 
+
 //.rodata
 static const u8 sBerryDescriptionPart1_Cheri[] = _("Blooms with delicate pretty flowers.");
 static const u8 sBerryDescriptionPart2_Cheri[] = _("The bright red BERRY is very spicy.");
@@ -1349,3 +1350,13 @@ void SetBerryTreesSeen(void)
         }
     }
 }
+
+bool8 ItemIsBerry(u16 item)
+{
+    u16 berry = item - FIRST_BERRY_INDEX;
+    if (berry > LAST_BERRY_INDEX - FIRST_BERRY_INDEX)
+        return FALSE;
+    else
+        return TRUE;
+}
+
