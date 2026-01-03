@@ -1472,7 +1472,7 @@ const u8 gText_CommErrorEllipsis[] = _("Communication error…");
 const u8 gText_MoveCloserToLinkPartner[] = _("Move closer to your link partner(s).\nAvoid obstacles between partners.");
 const u8 gText_ABtnRegistrationCounter[] = _("A Button: Registration Counter");
 const u8 gText_ABtnTitleScreen[] = _("A Button: Title Screen");
-const u8 gText_Option[] = _("OPTION: EVS ON? {STR_VAR_1}   INF TMs? {STR_VAR_2}");
+const u8 gText_Option[] = _("{COLOR 7}EVS {COLOR 7}ON? {COLOR 7}{STR_VAR_1}     {COLOR 2}INF:  {COLOR RED}TMs? {COLOR RED}{STR_VAR_2}  {COLOR 10}BERs? {COLOR 10}{STR_VAR_3}");
 const u8 gText_TextSpeed[] = _("TEXT SPEED");
 const u8 gText_BattleScene[] = _("BATTLE SCENE");
 const u8 gText_BattleStyle[] = _("BATTLE STYLE");
@@ -1559,10 +1559,6 @@ const u8 gText_LevelCapMet[] = _("Cannot use endless candies\nto exceed level ca
 // EV birch menu
 const u8 gText_BirchEvYes[] = _("YES");
 const u8 gText_BirchEvNo[] = _("NO");
-
-// TM birch menu
-const u8 gText_BirchTmYes[] = _("YES");
-const u8 gText_BirchTmNo[] = _("NO");
 
 // Endless Repel
 const u8 gText_EndlessRepel[] = _("Repel wild Pokemon indefinitely.");

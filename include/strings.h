@@ -331,11 +331,14 @@ extern const u8 gText_Birch_EvYesChosen[];
 extern const u8 gText_Birch_EvNoChosen[];
 
 // TM birch menu
-extern const u8 gText_BirchTmYes[];
-extern const u8 gText_BirchTmNo[];
 extern const u8 gText_Birch_TmOrNo[];
 extern const u8 gText_Birch_TmYesChosen[];
 extern const u8 gText_Birch_TmNoChosen[];
+
+// EV birch menu
+extern const u8 gText_Birch_BerOrNo[];
+extern const u8 gText_Birch_BerYesChosen[];
+extern const u8 gText_Birch_BerNoChosen[];
 
 // Endless Repel
 

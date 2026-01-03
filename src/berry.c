@@ -1354,8 +1354,16 @@ void SetBerryTreesSeen(void)
 bool8 ItemIsBerry(u16 item)
 {
     u16 berry = item - FIRST_BERRY_INDEX;
-    if (berry > LAST_BERRY_INDEX - FIRST_BERRY_INDEX)
+
+    // See if infinite berries setting off
+    if (gSaveBlock2Ptr->determineBERs == 0)
         return FALSE;
+
+    // Actual berry check
+    if (berry > LAST_BERRY_INDEX - FIRST_BERRY_INDEX)
+    {
+        return FALSE;
+    }
     else
         return TRUE;
 }
