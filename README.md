@@ -54,7 +54,7 @@ Follows Gym leaders and Drake's highest leveled Pokemon:
 * 55 - Drake
 
 ### EVless mode
-Don't want to have an advantage against enemy Pokemon? Well you can play the game without EVs (choice at the beginning of the game is permanent).
+Don't want to have an advantage against enemy Pokemon? Well you can play the game without EVs (can change later by speaking to an aide in prof. Birch's lab).
 
 ![alt text](readmeImgs/EVchoice.PNG "CHOICE IS PERMANENT")
 
