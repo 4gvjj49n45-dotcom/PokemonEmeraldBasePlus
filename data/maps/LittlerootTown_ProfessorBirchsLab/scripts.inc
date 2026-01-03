@@ -285,6 +285,82 @@ LittlerootTown_ProfessorBirchsLab_EventScript_Aide::
 	release
 	end
 
+LittlerootTown_ProfessorBirchsLab_EventScript_PatchGuy::
+	lock
+	faceplayer
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_PatchGuy, MSGBOX_DEFAULT
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_PatchGuyEVs, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, LittlerootTown_ProfessorBirchsLab_EventScript_EVsNo
+	goto_if_eq VAR_RESULT, YES, LittlerootTown_ProfessorBirchsLab_EventScript_EVsYes
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_PatchGuy2::
+	lock
+	faceplayer
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_PatchGuyTMs, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, LittlerootTown_ProfessorBirchsLab_EventScript_TMsNo
+	goto_if_eq VAR_RESULT, YES, LittlerootTown_ProfessorBirchsLab_EventScript_TMsYes
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_PatchGuy3::
+	lock
+	faceplayer
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_PatchGuyBERs, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, LittlerootTown_ProfessorBirchsLab_EventScript_BERsNo
+	goto_if_eq VAR_RESULT, YES, LittlerootTown_ProfessorBirchsLab_EventScript_BERsYes
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_PatchGuy4::
+	lock
+	faceplayer
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_PatchGuyItems, MSGBOX_DEFAULT
+	special BasePlusItems
+	goto_if_eq VAR_RESULT, 0, LittlerootTown_ProfessorBirchsLab_EventScript_ItemsGiven
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_ItemsHad
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_ItemsHad::
+	lock
+	faceplayer
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_PatchGuyItemsHad, MSGBOX_DEFAULT
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_ItemsGiven::
+	lock
+	faceplayer
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_PatchGuyItemsGiven, MSGBOX_DEFAULT
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_EVsNo::
+	special EVsNo
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_PatchGuy2
+
+LittlerootTown_ProfessorBirchsLab_EventScript_EVsYes::
+	special EVsYes
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_PatchGuy2
+
+LittlerootTown_ProfessorBirchsLab_EventScript_TMsNo::
+	special TMsNo
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_PatchGuy3
+
+LittlerootTown_ProfessorBirchsLab_EventScript_TMsYes::
+	special TMsYes
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_PatchGuy3
+
+LittlerootTown_ProfessorBirchsLab_EventScript_BERsNo::
+	special BERsNo
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_PatchGuy4
+
+LittlerootTown_ProfessorBirchsLab_EventScript_BERsYes::
+	special BERsYes
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_PatchGuy4
+
 LittlerootTown_ProfessorBirchsLab_EventScript_AideAlreadyMet::
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_BirchIsntOneForDeskWork, MSGBOX_DEFAULT
 	release
@@ -1010,4 +1086,29 @@ LittlerootTown_ProfessorBirchsLab_Text_GetPortaPc:
 	.string "Take this medicine, magical candy, and\n"
 	.string "handy dandy infinite repel too as well\p"
 	.string "as a way to apply any status condition.\n$"
+
+LittlerootTown_ProfessorBirchsLab_Text_PatchGuy:
+	.string "Hi there, I'm the patch guy.'\p"
+	.string "Let me see what you need to get up\n"
+	.string "to speed.\p"
+	.string "First, let's set your global settings.\p"
+	.string "Then I'll give any new items.\n$"
+
+LittlerootTown_ProfessorBirchsLab_Text_PatchGuyEVs:
+	.string "Do you want EVs on?\n$"
+
+LittlerootTown_ProfessorBirchsLab_Text_PatchGuyTMs:
+	.string "Do you want infinite TMs?\n$"
+
+LittlerootTown_ProfessorBirchsLab_Text_PatchGuyBERs:
+	.string "Do you want infinite Berries?\n$"
+
+LittlerootTown_ProfessorBirchsLab_Text_PatchGuyItems:
+	.string "Let's see if you're missing any items.\n$"
+
+LittlerootTown_ProfessorBirchsLab_Text_PatchGuyItemsHad:
+	.string "You're already caught up with items.\n$"
+
+LittlerootTown_ProfessorBirchsLab_Text_PatchGuyItemsGiven:
+	.string "Now you have all the new key items.\n$"
 
