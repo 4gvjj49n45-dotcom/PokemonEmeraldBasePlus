@@ -36,8 +36,7 @@ gText_Birch_BoyOrGirl::
 	.string "Or are you a girl?$"
 
 gText_Birch_EvOrNo::
-	.string "Do you want EVs?\n"
-	.string "You cannot change this later.$"
+	.string "Do you want EVs?\n$"
 
 gText_Birch_EvYesChosen::
 	.string "Playing with EVs.$"
@@ -46,8 +45,7 @@ gText_Birch_EvNoChosen::
 	.string "Playing with no EVs.$"
 
 gText_Birch_TmOrNo::
-	.string "Do you want infinite TMs?\n"
-	.string "You cannot change this later.$"
+	.string "Do you want infinite TMs?\n$"
 
 gText_Birch_TmYesChosen::
 	.string "Playing with infinite TMs.$"
@@ -56,8 +54,7 @@ gText_Birch_TmNoChosen::
 	.string "Playing with standard TMs.$"
 
 gText_Birch_BerOrNo::
-	.string "Do you want infinite Berries?\n"
-	.string "You cannot change this later.$"
+	.string "Do you want infinite Berries?\n$"
 
 gText_Birch_BerYesChosen::
 	.string "Playing with infinite Berries.$"
