@@ -648,11 +648,20 @@ static void DrawHeaderText(void)
 
     if (gSaveBlock2Ptr->determineTMs == 1)
     {
-        StringCopy(gStringVar2, gText_BirchTmYes);
+        StringCopy(gStringVar2, gText_BirchEvYes);
     }
     else
     {
-        StringCopy(gStringVar2, gText_BirchTmNo);
+        StringCopy(gStringVar2, gText_BirchEvNo);
+    }
+
+    if (gSaveBlock2Ptr->determineBERs == 1)
+    {
+        StringCopy(gStringVar3, gText_BirchEvYes);
+    }
+    else
+    {
+        StringCopy(gStringVar3, gText_BirchEvNo);
     }
 
     StringExpandPlaceholders(gStringVar4, gText_Option);
