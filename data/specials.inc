@@ -536,3 +536,10 @@ gSpecials::
 	def_special CloseDeptStoreElevatorWindow
 	def_special TrySetBattleTowerLinkType
 	def_special Special_AdjustLevelCaps
+	def_special EVsNo
+	def_special EVsYes
+	def_special TMsNo
+	def_special TMsYes
+	def_special BERsNo
+	def_special BERsYes
+	def_special BasePlusItems
