@@ -73,6 +73,7 @@
 #include "constants/rgb.h"
 #include "constants/songs.h"
 #include "constants/abilities.h"
+#include "berry.h"
 
 enum {
     MENU_SUMMARY,
@@ -3213,7 +3214,8 @@ static void Task_GiveHoldItem(u8 taskId)
         item = gSpecialVar_ItemId;
         DisplayGaveHeldItemMessage(&gPlayerParty[gPartyMenu.slotId], item, FALSE, 0);
         GiveItemToMon(&gPlayerParty[gPartyMenu.slotId], item);
-        RemoveBagItem(item, 1);
+        if (!ItemIsBerry(item))
+            RemoveBagItem(item, 1);
         gTasks[taskId].func = Task_UpdateHeldItemSprite;
     }
 }
@@ -3238,10 +3240,13 @@ static void Task_SwitchItemsYesNo(u8 taskId)
 
 static void Task_HandleSwitchItemsYesNoInput(u8 taskId)
 {
+    u16 item;
+    item = gSpecialVar_ItemId;
     switch (Menu_ProcessInputNoWrapClearOnChoose())
     {
     case 0: // Yes, switch items
-        RemoveBagItem(gSpecialVar_ItemId, 1);
+        if (!ItemIsBerry(item))
+            RemoveBagItem(gSpecialVar_ItemId, 1);
 
         // No room to return held item to bag
         if (AddBagItem(sPartyMenuItemId, 1) == FALSE)
@@ -5630,7 +5635,10 @@ static void RemoveItemToGiveFromBag(u16 item)
     if (gPartyMenu.action == PARTY_ACTION_GIVE_PC_ITEM) // Unused, never occurs
         RemovePCItem(item, 1);
     else
-        RemoveBagItem(item, 1);
+    {
+        if (!ItemIsBerry(item))
+            RemoveBagItem(item, 1);
+    }
 }
 
 // Returns FALSE if there was no space to return the item
