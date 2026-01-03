@@ -1,5 +1,5 @@
 
-# Pokémon Emerald Base Plus v1.1
+# Pokémon Emerald Base Plus v1.2
 
 ![BoxArt](readmeImgs/Emerald.png)
 
@@ -18,15 +18,10 @@ like the following:
 
 ![PatchScreen](readmeImgs/correctROM.PNG)
 
-# Version 1.1
-The following features have been implemented:
-* Faster fishing (guaranteed encounter after the first round of dots appear on the screen)
-* No HM slaves needed! You can use HMs as field moves freely after earning their respective bage
-* Status condition item - lets you apply any status to your selected mon
-
 ## QOL features
 
-Note: the follwing four items are given to the player immediately after officially getting the starter from Birch.
+Note: the follwing items are given to the player immediately after officially getting the starter from Birch.
+Don't get too comfortable with the items, as they will be restricted against the elite four and champion.
 
 ![alt text](readmeImgs/bag.PNG "Each of these can be registered.")
 
@@ -41,6 +36,9 @@ Think of it as a portable pokemon center.
 
 ### Endless repel key item
 Repels wild Pokemon indefinitely until turned off.
+
+### Status case
+Can inflict any applicable status to a selected mon in your party
 
 ### Level caps
 Blocks Pokemon exp after reaching the cap; current cap can be viewed through the options menu.
@@ -64,6 +62,12 @@ You can view which setting you are playing on through the options menu
 
 ![alt text](readmeImgs/optionsShowcase.PNG "I really like the look of this")
 
+### Infinite TMs mode
+Should you choose to have infinite TMs on, then they will not be removed from the bag upon use!
+
+### Infinite Berries mode
+Should you choose to have infinite Berries on, then they will not be removed from the bag when given to a mon!
+
 ### Enhanced summary screen
 Natures are reflected in the summary screen and follows the Gen 5 and on-wards colour scheme (RED = +, BLUE = -).
 
@@ -75,3 +79,13 @@ You can also view your Pokemon's IVs by pressing A on the stats screen.
 
 ### Quick use items
 You can spam use items on Pokemon. As long as you still have more of the item left in your bag, you will not be kicked out of the party menu screen when using them. Spam candies to your hearts desire!
+
+### No HM slaves required
+Upon earning their respective badge, the field effect of HMs is automatically triggered based on the context. For example, cut trees are immediately cut when interacted with upon defeating Roxanne.
+
+### Faster fishing
+Fishing now guarantees an encounter and only has 1 sequence of dots appear before transitioning to the battle.
+
+### Patch guy NPC
+Interacting with this NPC (in prof. Birch's lab) ensures your key items match what the patch expects. He also let's you set your EV, TM, and berry mode.
+
