@@ -55,6 +55,16 @@ gText_Birch_TmYesChosen::
 gText_Birch_TmNoChosen::
 	.string "Playing with standard TMs.$"
 
+gText_Birch_BerOrNo::
+	.string "Do you want infinite Berries?\n"
+	.string "You cannot change this later.$"
+
+gText_Birch_BerYesChosen::
+	.string "Playing with infinite Berries.$"
+
+gText_Birch_BerNoChosen::
+	.string "Playing with standard Berries.$"
+
 gText_Birch_WhatsYourName::
 	.string "All right.\n"
 	.string "What's your name?$"
