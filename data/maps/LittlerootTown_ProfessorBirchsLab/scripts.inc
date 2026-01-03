@@ -1008,6 +1008,6 @@ LittlerootTown_ProfessorBirchsLab_Text_GetPortaPc:
 	.string "All these nuzlockers are raving about it\n"
 	.string "and i don't have any use for the thing.\p"
 	.string "Take this medicine, magical candy, and\n"
-	.string "handy dandy infinite repel too as well\n"
+	.string "handy dandy infinite repel too as well\p"
 	.string "as a way to apply any status condition.\n$"
 
