@@ -1,0 +1,28 @@
+##### feature/MinorChangesQOL
+* Make Birch give event tickets in post-game
+* Adjust trade evolutions
+* Adjust held items on wild pokemon (make evo items be 100%)
+* Make level cap 100 post champion
+
+##### feature/forgetHMs
+* Make HMs forgettable
+
+##### feature/registerList
+* register list like in run and bun
+
+##### feature/fieldMoveMenu
+* add a situational field to the mon select menu that goes to another menu
+"Field Moves" iff the mon can learn a valid field move e.g. dig, teleport, etc.
+
+##### feature/switchItems
+* Let items be swapped around in party menu like in BW onwards
+
+##### feature/renameInParty
+* Let user rename mon through party menu
+
+##### cleanup
+* make text boxes clear in party menu before re-use
+* make STATS text become IVs in summary screen
+
+##### feature/goodLuck
+* Try and remove checksum checks for bad-egg
